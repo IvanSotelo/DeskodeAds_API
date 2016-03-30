@@ -1,6 +1,6 @@
-# API Deskode Adds
+# API Deskode Ads
 
-Api para Deskode Adds
+Api para Deskode Ads
 
 ## Web Oficial
 
