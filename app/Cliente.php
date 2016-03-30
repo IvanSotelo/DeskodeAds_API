@@ -48,4 +48,12 @@ class Cliente extends Model
 		// $this hace referencia al objeto que tengamos en ese momento de Cliente.
 		return $this->belongsTo('App\Usuario');
 	}
+
+	// Relación de Cliente con ventas:
+	public function ventas()
+	{	
+		// 1 cliente pertenece a mucha ventas
+		// $this hace referencia al objeto que tengamos en ese momento de Cliente.
+		return $this->hasMany('App\Venta');
+	}
 }
