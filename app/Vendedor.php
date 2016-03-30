@@ -32,4 +32,12 @@ class Vendedor extends Model
 		// $this hace referencia al objeto que tengamos en ese momento de Vendedor.
 		return $this->belongsTo('App\Usuario');
 	}
+	
+	// Relación de Vendedor con ventas:
+	public function ventas()
+	{	
+		// 1 vendedor tiene muchas ventas
+		// $this hace referencia al objeto que tengamos en ese momento de Vendedor.
+		return $this->hasMany('App\Venta');
+	}
 }

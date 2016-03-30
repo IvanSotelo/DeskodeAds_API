@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Venta extends Model
 {
    // Nombre de la tabla en MySQL.
-	protected $table="reproducciones";
-	protected $primaryKey = 'IdReproduccion';
+	protected $table="ventas";
+	protected $primaryKey = 'IdVenta';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdVideo','Mes','Year','Reproducciones','Vistas');
+	protected $fillable = array('IdVideo','IdCliente','IdVendedor','Estatus','Precio');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 
@@ -25,11 +25,27 @@ class Venta extends Model
 	// 1 usuario puede tener muchos roles  ->belongsToMany()
 	//  etc..
  
-	// Relación de pantalla con video:
+	// Relación de venta con video:
 	public function video()
 	{	
-		// 1 reproduccion pertenece a 1 video
-		// $this hace referencia al objeto que tengamos en ese momento de Reproduccion.
-		return $this->belongsTo('App\Video');
+		// 1 venta tiene un video
+		// $this hace referencia al objeto que tengamos en ese momento de Venta.
+		return $this->hasOne('App\Video');
+	}
+
+	// Relación de venta con cliente:
+	public function cliente()
+	{	
+		// 1 venta pertenece a un cliente
+		// $this hace referencia al objeto que tengamos en ese momento de Venta.
+		return $this->belongsTo('App\Cliente');
+	}
+
+		// Relación de venta con vendedor:
+	public function vendedor()
+	{	
+		// 1 venta pertenece a un vendedor
+		// $this hace referencia al objeto que tengamos en ese momento de Venta.
+		return $this->belongsTo('App\Vendedor');
 	}
 }
