@@ -13,7 +13,18 @@ class PantallasMigration extends Migration
     public function up()
     {
         Schema::create('pantallas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('IdPantalla');
+            $table->integer('IdVideo')->unsigned();
+            // Indicamos cual es la clave foránea de esta tabla:
+            $table->foreign('IdVideo')->references('IdVideo')->on('videos');
+            $table->integer('IdCategoria')->unsigned();
+            // Indicamos cual es la clave foránea de esta tabla:
+            $table->foreign('IdCategoria')->references('IdCategoria')->on('categorias');
+
+            $table->string('Ubicacion');
+            $table->integer('Lat');
+            $table->integer('Lng');
+
             $table->timestamps();
         });
     }

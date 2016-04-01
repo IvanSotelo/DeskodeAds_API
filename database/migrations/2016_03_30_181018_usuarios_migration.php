@@ -13,7 +13,12 @@ class UsuariosMigration extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('IdUsuario');
+            $table->string('Usuario')->unique();
+            $table->string('Contrasena',8);
+            $table->string('Privilegio');
+            $table->string('Foto');
+
             $table->timestamps();
         });
     }

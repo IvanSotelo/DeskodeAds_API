@@ -13,7 +13,22 @@ class ComentariosMigration extends Migration
     public function up()
     {
         Schema::create('comentarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('IdComentario');
+            $table->string('Comentario');
+            $table->date('Fecha');
+
+            // Añadimos la clave foránea con Fabricante. fabricante_id
+            // Acordarse de añadir al array protected $fillable del fichero de modelo "Avion.php" la nueva columna:
+            // protected $fillable = array('modelo','longitud','capacidad','velocidad','alcance','fabricante_id');
+            $table->integer('IdUsuario')->unsigned();
+ 
+            // Indicamos cual es la clave foránea de esta tabla:
+            $table->foreign('IdUsuario')->references('IdUsuario')->on('usuarios');
+
+             $table->integer('IdVideo')->unsigned();
+ 
+            // Indicamos cual es la clave foránea de esta tabla:
+            $table->foreign('IdVideo')->references('IdVideo')->on('videos');
             $table->timestamps();
         });
     }
