@@ -6,7 +6,11 @@ La Api para Deskode Ads es un servicio web REST con todas las funciones para rea
 
 Ivan Sotelo
 
+<<<<<<< HEAD
 ## Metodos
+=======
+## 
+>>>>>>> 5c41cb9186bf474f1781a468addd651960d452eb
 
 METODO|URL|DESCRIPCION
 ------|---|---------
