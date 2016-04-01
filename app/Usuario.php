@@ -14,7 +14,7 @@ class Usuario extends Model
 	protected $primaryKey = 'IdUsuario';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('Contrasena','Privilegio','Foto');
+	protected $fillable = array('Usuario','Contrasena','Privilegio','Foto');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

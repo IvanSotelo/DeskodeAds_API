@@ -13,8 +13,11 @@ class CategoriasMigration extends Migration
     public function up()
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->increments('IdCategoria');
+            $table->string('Categoria');
+
+            // Para que también cree automáticamente los campos timestamps (created_at, updated_at)
+            $table->timestamps()
         });
     }
 
