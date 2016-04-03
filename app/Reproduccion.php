@@ -11,7 +11,7 @@ class Reproduccion extends Model
 	protected $primaryKey = 'IdReproduccion';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdVideo','Mes','Year','Reproducciones','Vistas');
+	protected $fillable = array('Mes','Year','Reproducciones','Vistas','IdVideo');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

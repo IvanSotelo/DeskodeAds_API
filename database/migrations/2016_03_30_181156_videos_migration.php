@@ -14,16 +14,16 @@ class VideosMigration extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('IdVideo');
+            $table->date('FechaAlta');
+            $table->date('FechaBaja')->nullable();
+            $table->string('URL');
+
             $table->integer('IdCliente')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('IdCliente')->references('IdCliente')->on('clientes');
             $table->integer('IdCategoria')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('IdCategoria')->references('IdCategoria')->on('categorias');
-
-            $table->date('FechaAlta');
-            $table->date('FechaBaja')->nullable();
-            $table->string('URL');
 
             $table->timestamps();
         });

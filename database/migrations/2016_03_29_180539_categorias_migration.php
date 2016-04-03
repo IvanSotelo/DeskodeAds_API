@@ -17,7 +17,7 @@ class CategoriasMigration extends Migration
             $table->string('Categoria');
 
             // Para que también cree automáticamente los campos timestamps (created_at, updated_at)
-            $table->timestamps()
+            $table->timestamps();
         });
     }
 

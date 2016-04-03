@@ -15,7 +15,7 @@ class ClientesMigration extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->increments('IdCliente');
             $table->string('Nombre');
-            $table->integer('Telefono',10);
+            $table->integer('Telefono');
             $table->string('Direccion');
             $table->string('EMail');
             $table->string('RFC');
@@ -26,7 +26,7 @@ class ClientesMigration extends Migration
             $table->integer('IdUsuario')->unsigned();
  
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdUsuario')->references('IdUsuario')->on('usuarios');
+            $table->foreign('IdUsuario')->references('IdUsuario')->on('usuarios')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class VendedoresMigration extends Migration
             $table->increments('IdVendedor');
             $table->string('Nombre');
             $table->string('Apellido');
-            $table->integer('Telefono',10);
+            $table->integer('Telefono');
 
             // Añadimos la clave foránea con Fabricante. fabricante_id
             // Acordarse de añadir al array protected $fillable del fichero de modelo "Avion.php" la nueva columna:
