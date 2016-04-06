@@ -45,4 +45,3 @@ class Usuario extends Model
 		return $this->belongsTo('App\Vendedor');
 	}
 }
-}
