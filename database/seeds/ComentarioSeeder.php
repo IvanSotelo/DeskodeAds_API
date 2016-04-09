@@ -34,7 +34,7 @@ class ComentarioSeeder extends Seeder {
 			Comentario::create(
 				[
 					'IdUsuario'=>$faker->numberBetween(1,$cuantos),
-					'IdVideo'=>$faker->numberBetween(1,$cuantos2)
+					'IdVideo'=>$faker->numberBetween(1,$cuantos2),
 					'Comentario'=>$faker->text(200),
 					'Fecha'=>$faker->date('Y-m-d')
 				]

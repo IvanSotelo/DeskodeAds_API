@@ -4,7 +4,6 @@ use Illuminate\Database\Seeder;
  
 // Hace uso del modelo de Pantalla.
 use App\Pantalla;
-use App\Video;
 use App\Categoria;
  
  

@@ -37,7 +37,7 @@ class VentaSeeder extends Seeder {
 				[
 					'IdVideo'=>$faker->numberBetween(1,$cuantos2),
 					'IdCliente'=>$faker->numberBetween(1,$cuantos),
-					'IdVendedor'=>$faker->numberBetween(1,$cuantos1)
+					'IdVendedor'=>$faker->numberBetween(1,$cuantos1),
 					'Estatus'=>$faker->randomElement($array = array ('Pendiente','Pagado')),
 					'Precio'=>$faker->randomNumber(9),
 					'Paquete'=>$faker->randomElement($array = array ('Individual','Doble'))

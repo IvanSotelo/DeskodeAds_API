@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
 		$this->call('UsuarioSeeder');
 	   	$this->call('ClienteSeeder');
 	   	$this->call('VendedorSeeder');
+	   	$this->call('PantallaSeeder');	 
 	   	$this->call('VideoSeeder');
 	   	$this->call('VentaSeeder');
-	   	$this->call('PantallaSeeder');	 
 	   	$this->call('ComentarioSeeder');
 	   	$this->call('ReproduccionSeeder');
 	   	$this->call('PagoSeeder');  	

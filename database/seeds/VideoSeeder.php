@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Video;
 use App\Cliente;
 use App\Categoria;
+use App\Pantalla;
  
  
 // Le indicamos que utilice también Faker.
@@ -25,7 +26,7 @@ class VideoSeeder extends Seeder {
 		$faker = Faker::create();
  		$cuantos= Cliente::all()->count();
  		$cuantos1= Categoria::all()->count();
- 		$cuantos2= Pantalla::all()->count()
+ 		$cuantos2= Pantalla::all()->count();
 		// Creamos un bucle para cubrir 5 Clientes:
 		for ($i=0; $i<20; $i++)
 		{
