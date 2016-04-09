@@ -14,10 +14,6 @@ class VendedoresMigration extends Migration
     {
         Schema::create('vendedores', function (Blueprint $table) {
             $table->increments('IdVendedor');
-            $table->string('Nombre');
-            $table->string('Apellido');
-            $table->string('Telefono');
-
             // Añadimos la clave foránea con Fabricante. fabricante_id
             // Acordarse de añadir al array protected $fillable del fichero de modelo "Avion.php" la nueva columna:
             // protected $fillable = array('modelo','longitud','capacidad','velocidad','alcance','fabricante_id');
@@ -25,6 +21,10 @@ class VendedoresMigration extends Migration
  
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('IdUsuario')->references('IdUsuario')->on('usuarios');
+            $table->string('Nombre');
+            $table->string('Apellido');
+            $table->string('Telefono');
+
             $table->timestamps();
         });
     }

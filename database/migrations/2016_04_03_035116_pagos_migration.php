@@ -14,11 +14,6 @@ class PagosMigration extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->increments('IdPago');
-            $table->integer('Pago');
-            $table->date('FechaPago');
-            $table->date('ProxPago');
-            $table->string('Estatus')->default('Pagado');
-
             // Añadimos la clave foránea con Fabricante. fabricante_id
             // Acordarse de añadir al array protected $fillable del fichero de modelo "Avion.php" la nueva columna:
             // protected $fillable = array('modelo','longitud','capacidad','velocidad','alcance','fabricante_id');
@@ -26,6 +21,11 @@ class PagosMigration extends Migration
  
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('IdCliente')->references('IdCliente')->on('clientes');
+            $table->integer('Pago');
+            $table->date('FechaPago');
+            $table->date('ProxPago');
+            $table->string('Estatus')->default('Pagado');
+
             $table->timestamps();
         });
     }

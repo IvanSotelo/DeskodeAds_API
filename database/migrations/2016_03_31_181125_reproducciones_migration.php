@@ -15,14 +15,14 @@ class ReproduccionesMigration extends Migration
         Schema::create('reproducciones', function (Blueprint $table) {
 
             $table->increments('IdReproduccion');
+            $table->integer('IdVideo')->unsigned();
+            // Indicamos cual es la clave foránea de esta tabla:
+            $table->foreign('IdVideo')->references('IdVideo')->on('videos');
+
             $table->string('Mes');
             $table->integer('Year');
             $table->integer('Reproducciones');
             $table->integer('Vistas');
-
-            $table->integer('IdVideo')->unsigned();
-            // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdVideo')->references('IdVideo')->on('videos');
 
             $table->timestamps();
         });
