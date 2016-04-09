@@ -11,7 +11,7 @@ class Video extends Model
 	protected $primaryKey = 'IdVideo';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('FechaAlta','FechaBaja','URL','IdCliente','IdCategoria');
+	protected $fillable = array('IdCliente','IdCategoria','IdPantalla','FechaAlta','FechaBaja','URL');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 
