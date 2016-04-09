@@ -25,6 +25,7 @@ class VideoSeeder extends Seeder {
 		$faker = Faker::create();
  		$cuantos= Cliente::all()->count();
  		$cuantos1= Categoria::all()->count();
+ 		$cuantos2= Pantalla::all()->count()
 		// Creamos un bucle para cubrir 5 Clientes:
 		for ($i=0; $i<20; $i++)
 		{
@@ -32,11 +33,12 @@ class VideoSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Video::create(
 				[
+					'IdCliente'=>$faker->numberBetween(1,$cuantos),
+					'IdCategoria'=>$faker->numberBetween(1,$cuantos1),
+					'IdPantalla'=>$faker->numberBetween(1,$cuantos2),
 					'FechaAlta'=>$faker->date('Y-m-d'),
 					'FechaBaja'=>$faker->date('Y-m-d'),
-					'URL'=>$faker->image($dir = '/tmp', $width = 640, $height = 480),
-					'IdCliente'=>$faker->numberBetween(1,$cuantos),
-					'IdCategoria'=>$faker->numberBetween(1,$cuantos1)
+					'URL'=>$faker->image($dir = '/tmp', $width = 640, $height = 480)
 				]
 			);
 		}

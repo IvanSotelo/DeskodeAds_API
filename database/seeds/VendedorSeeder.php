@@ -31,10 +31,10 @@ class VendedorSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Vendedor::create(
 				[
+					'IdUsuario'=>$id,
 					'Nombre'=>$faker->firstName(),
 					'Apellido'=>$faker->lastName(),
-					'Telefono'=>$faker->phoneNumber(),
-					'IdUsuario'=>$id
+					'Telefono'=>$faker->phoneNumber()
 				]
 			);
 		}

@@ -25,7 +25,7 @@ class PantallaSeeder extends Seeder {
 		$faker = Faker::create();
 
  		$cuantos= Categoria::all()->count();
- 		$cuantos2= Video::all()->count();
+
 		// Creamos un bucle para cubrir 5 Ventas:
 		for ($i=0; $i<20; $i++)
 		{
@@ -33,11 +33,10 @@ class PantallaSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Pantalla::create(
 				[
+					'IdCategoria'=>$faker->numberBetween(1,$cuantos),
 					'Ubicacion'=>$faker->company(),
 					'Lat'=>$faker->latitude(-90,90),
-					'Lng'=>$faker->longitude(-180,180),
-					'IdVideo'=>$faker->numberBetween(1,$cuantos2),
-					'IdCategoria'=>$faker->numberBetween(1,$cuantos),
+					'Lng'=>$faker->longitude(-180,180)
 				]
 			);
 		}

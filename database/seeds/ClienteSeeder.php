@@ -31,12 +31,12 @@ class ClienteSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Cliente::create(
 				[
+					'IdUsuario'=>$id,
 					'Nombre'=>$faker->name(),
 					'Telefono'=>$faker->phoneNumber(),
 					'Direccion'=>$faker->address(),
 					'Email'=>$faker->freeEmail(),
-					'RFC'=>$faker->swiftBicNumber (),
-					'IdUsuario'=>$id
+					'RFC'=>$faker->swiftBicNumber ()
 				]
 			);
 		}
