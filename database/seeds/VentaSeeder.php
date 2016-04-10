@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Venta;
 use App\Cliente;
 use App\Vendedor;
-use App\Video;
  
  
 // Le indicamos que utilice también Faker.
@@ -28,7 +27,7 @@ class VentaSeeder extends Seeder {
  		$cuantos= Cliente::all()->count();
  		$cuantos1= Vendedor::all()->count();
 		// Creamos un bucle para cubrir 5 Ventas:
-		for ($i=0; $i<$cuantos2; $i++)
+		for ($i=0; $i<20; $i++)
 		{
 			// Cuando llamamos al método create del Modelo Venta
 			// se está creando una nueva fila en la tabla.
