@@ -27,7 +27,6 @@ class VentaSeeder extends Seeder {
 
  		$cuantos= Cliente::all()->count();
  		$cuantos1= Vendedor::all()->count();
- 		$cuantos2= Video::all()->count();
 		// Creamos un bucle para cubrir 5 Ventas:
 		for ($i=0; $i<$cuantos2; $i++)
 		{
@@ -35,7 +34,6 @@ class VentaSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Venta::create(
 				[
-					'IdVideo'=>$faker->numberBetween(1,$cuantos2),
 					'IdCliente'=>$faker->numberBetween(1,$cuantos),
 					'IdVendedor'=>$faker->numberBetween(1,$cuantos1),
 					'Estatus'=>$faker->randomElement($array = array ('Pendiente','Pagado')),

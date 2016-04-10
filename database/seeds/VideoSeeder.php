@@ -7,6 +7,7 @@ use App\Video;
 use App\Cliente;
 use App\Categoria;
 use App\Pantalla;
+use App\Venta;
  
  
 // Le indicamos que utilice también Faker.
@@ -27,6 +28,7 @@ class VideoSeeder extends Seeder {
  		$cuantos= Cliente::all()->count();
  		$cuantos1= Categoria::all()->count();
  		$cuantos2= Pantalla::all()->count();
+ 		$cuantos3= Venta::all()->count();
 		// Creamos un bucle para cubrir 5 Clientes:
 		for ($i=0; $i<20; $i++)
 		{
@@ -37,6 +39,7 @@ class VideoSeeder extends Seeder {
 					'IdCliente'=>$faker->numberBetween(1,$cuantos),
 					'IdCategoria'=>$faker->numberBetween(1,$cuantos1),
 					'IdPantalla'=>$faker->numberBetween(1,$cuantos2),
+					'IdVenta'=>$faker->numberBetween(1,$cuantos3),
 					'FechaAlta'=>$faker->date('Y-m-d'),
 					'FechaBaja'=>$faker->date('Y-m-d'),
 					'URL'=>$faker->image($dir = '/tmp', $width = 640, $height = 480)

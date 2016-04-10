@@ -14,10 +14,6 @@ class VentasMigration extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->increments('IdVenta');
-
-            $table->integer('IdVideo')->unsigned();
-            // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdVideo')->references('IdVideo')->on('videos');
             $table->integer('IdCliente')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('IdCliente')->references('IdCliente')->on('clientes');

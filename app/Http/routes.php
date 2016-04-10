@@ -10,21 +10,26 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::resource('categorias','CategoriaController');
-Route::resource('clientes','ClienteController');
-Route::resource('clientes.pagos','ClientePagoController');
-Route::resource('clientes.videos','ClienteVideoController');
-Route::resource('comentarios','ComentarioController');
-Route::resource('pagos','PagoController');
-Route::resource('pantallas','PantallaController');
-Route::resource('pantallas.videos','PantallaVideoController');
-Route::resource('reproducciones','ReproduccionController');
-Route::resource('vendedores','VendedorController');
-Route::resource('ventas','VentaController');
-Route::resource('ventas.videos','VentaVideoController');
-Route::resource('videos','VideoController');
-Route::resource('videos.comentarios','VideoComentarioController');
-Route::resource('videos.reproducciones','VideoReproduccionController');
+/*Route::group(['prefix' => 'api'], function () {*/
+	Route::resource('categorias','CategoriaController',['except'=>['edit','create'] ]);
+	Route::resource('pantallas.categorias','PantallaCategoriaController',['only'=>['index','show'] ]);
+	Route::resource('clientes','ClienteController',['except'=>['edit','create'] ]);
+	Route::resource('clientes.pagos','ClientePagoController',['except'=>['edit','create','show'] ]);
+	Route::resource('clientes.videos','ClienteVideoController',['only'=>['index','show'] ]);
+	Route::resource('clientes.compras','ClienteVentaController',['only'=>['index','show'] ]);
+	Route::resource('comentarios','ComentarioController',['only'=>['index','show'] ]);
+	Route::resource('pagos','PagoController',['only'=>['index','show']]);
+	Route::resource('pantallas','PantallaController',['except'=>['edit','create'] ]);
+	Route::resource('pantallas.videos','PantallaVideoController',['only'=>['index','show'] ]);
+	Route::resource('reproducciones','ReproduccionController',['only'=>['index','show'] ]);
+	Route::resource('vendedores','VendedorController',['except'=>['edit','create'] ]);
+	Route::resource('vendedores.ventas','VendedorVentaController',['only'=>['index','show'] ]);
+	Route::resource('ventas','VentaController',['except'=>['edit','create'] ]);
+	Route::resource('ventas.videos','VentaVideoController',['only'=>['index','show'] ]);
+	Route::resource('videos','VideoController',['except'=>['edit','create'] ]);
+	Route::resource('videos.comentarios','VideoComentarioController',['except'=>['edit','create','show']]);
+	Route::resource('videos.reproducciones','VideoReproduccionController',['except'=>['edit','create','show']]);
+/*});*/
 Route::get('/', function () {
     return view('welcome');
 });
