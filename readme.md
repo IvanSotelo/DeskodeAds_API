@@ -2,9 +2,24 @@
 
 La Api para Deskode Ads es un servicio web REST con todas las funciones para realizar peticiones de lectura y escritura que utiliza OAuth2 para la autenticacion. Para mas informacion visita [Deskode.com](http://www.deskode.com).
 
-## Desarrollador
+## Construccion de la Solicitud
 
-Ivan Sotelo
+Cada petición HTTP consiste en un método HTTP, un metodo y una lista de parámetros. A lo largo de la documentación, estas solicitudes tienen el formato como el siguiente ejemplo.
+
+{METHOD}|http://ads.deskode.com/api/{Endpoint}
+
+1. Método
+La mayor parte de los endpoints de la API de Deskode Ads tienen soporte a múltiples acciones. Cada acción se define por el mismo método HTTP. Estos métodos generalmente siguen las siguientes pautas.
+
+MÉTODO |Descripción|Ejemplo
+------|---|---------
+GET|Recupera un JSON de un recurso|GET /videos devuelve la informacion de un video
+POST|Añade nuevos recursos a una colección. Este método generalmente requiere parámetros adicionales|POST /clientes/pagos al cliente crea un nuevo pago
+PATCH|Modifica un recurso. El cuerpo contendrá la nueva representación del recurso.|PATCH /videos/[video_id] le permite cambiar los campos del video [video_id]
+DELETE	| Elimina un recurso existente |	DELETE /videos/[video_id] borra el video [video_id]
+
+2. Endpoint
+Un Endpoint de la API es un camino que identifica de forma exclusiva un recurso. Para hacer una petición HTTP añade un Endpoint hasta el final de http://ads.deskode.com/api/. La respuesta de un Endpoint será JSON, y contienen uno o más recursos.
 
 ## Metodos
 
