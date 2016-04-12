@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Video para ciertas tareas.
+use App\Video;
 
 class VideoController extends Controller
 {
@@ -17,7 +19,7 @@ class VideoController extends Controller
 	public function index()
 	{
 		// Devolverá todos los videos.
-		return "Mostrando todos los videos de la base de datos.";
+		return response()->json(['status'=>'ok','data'=>Video::all()], 200);
 	}
  
 	/**
@@ -50,8 +52,18 @@ class VideoController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra video con id: $id";
+		//return "Se muestraVideo con id: $id";
+		$Video=Video::find($id);
+ 
+		// Si no existe ese Video devolvemos un error.
+		if (!$Video)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Video],200);
 	}
  
 	/**

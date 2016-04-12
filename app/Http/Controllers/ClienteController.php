@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Cliente para ciertas tareas.
+use App\Cliente;
 
 class ClienteController extends Controller
 {
@@ -16,8 +18,7 @@ class ClienteController extends Controller
 	 */
 	public function index()
 	{
-		// Devolverá todos los clientes.
-		return "Mostrando todos los clientes de la base de datos.";
+		return response()->json(['status'=>'ok','data'=>Cliente::all()], 200);
 	}
  
 	/**
@@ -50,8 +51,18 @@ class ClienteController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra cliente con id: $id";
+		//return "Se muestra Categoria con id: $id";
+		$Cliente=Cliente::find($id);
+ 
+		// Si no existe ese Cliente devolvemos un error.
+		if (!$Cliente)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Cliente],200);
 	}
  
 	/**

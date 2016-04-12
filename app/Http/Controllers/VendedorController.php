@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Vendedor para ciertas tareas.
+use App\Vendedor;
 
 class VendedorController extends Controller
 {
@@ -16,8 +18,7 @@ class VendedorController extends Controller
 	 */
 	public function index()
 	{
-		// Devolverá todos los vendedores.
-		return "Mostrando todos los vendedores de la base de datos.";
+		return response()->json(['status'=>'ok','data'=>Vendedor::all()], 200);
 	}
  
 	/**
@@ -50,8 +51,18 @@ class VendedorController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra vendedor con id: $id";
+		//return "Se muestra Vendedor con id: $id";
+		$Vendedor=Vendedor::find($id);
+ 
+		// Si no existe ese Vendedor devolvemos un error.
+		if (!$Vendedor)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Vendedor con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Vendedor],200);
 	}
  
 	/**

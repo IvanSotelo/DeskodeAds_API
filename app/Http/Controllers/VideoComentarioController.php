@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesita los dos modelos Video y Comentario
+use App\Video;
+use App\Comentario;
 
 class VideoComentarioController extends Controller
 {
@@ -16,7 +19,18 @@ class VideoComentarioController extends Controller
 	public function index($idVideo)
 	{
 		// Devolverá todos los comentarios.
-		return "Mostrando los comentarios del Video con Id $idVideo";
+		//return "Mostrando los comentarios del Video con Id $idVideo";
+		$Video=Video::find($idVideo);
+ 
+		if (! $Video)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Video->comentarios()->get()],200);
+		//return response()->json(['status'=>'ok','data'=>$Video->aviones],200);
 	}
  
 	/**

@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-/*Route::group(['prefix' => 'api'], function () {*/
+Route::group(['prefix' => 'api'], function () {
 	Route::resource('categorias','CategoriaController',['except'=>['edit','create'] ]);
 	Route::resource('pantallas.categorias','PantallaCategoriaController',['only'=>['index','show'] ]);
 	Route::resource('clientes','ClienteController',['except'=>['edit','create'] ]);
@@ -29,7 +29,7 @@
 	Route::resource('videos','VideoController',['except'=>['edit','create'] ]);
 	Route::resource('videos.comentarios','VideoComentarioController',['except'=>['edit','create','show']]);
 	Route::resource('videos.reproducciones','VideoReproduccionController',['except'=>['edit','create','show']]);
-/*});*/
+});
 Route::get('/', function () {
     return view('welcome');
 });

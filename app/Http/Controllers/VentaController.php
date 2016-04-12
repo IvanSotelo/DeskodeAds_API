@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Venta para ciertas tareas.
+use App\Venta;
 
 class VentaController extends Controller
 {
@@ -17,7 +19,7 @@ class VentaController extends Controller
 	public function index()
 	{
 		// Devolverá todos las ventas.
-		return "Mostrando todos las ventas de la base de datos.";
+		return response()->json(['status'=>'ok','data'=>Venta::all()], 200);
 	}
  
 	/**
@@ -50,8 +52,18 @@ class VentaController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra venta con id: $id";
+		//return "Se muestraVenta con id: $id";
+		$Venta=Venta::find($id);
+ 
+		// Si no existe ese Venta devolvemos un error.
+		if (!$Venta)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Venta con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Venta],200);
 	}
  
 	/**

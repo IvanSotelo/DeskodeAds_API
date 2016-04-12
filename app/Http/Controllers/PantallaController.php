@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Pantalla para ciertas tareas.
+use App\Pantalla;
 
 class PantallaController extends Controller
 {
@@ -16,8 +18,7 @@ class PantallaController extends Controller
 	 */
 	public function index()
 	{
-		// Devolverá todos las pantallas.
-		return "Mostrando todos las pantallas de la base de datos.";
+		return response()->json(['status'=>'ok','data'=>Pantalla::all()], 200);
 	}
  
 	/**
@@ -50,8 +51,18 @@ class PantallaController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra pantalla con id: $id";
+		//return "Se muestra Pantalla con id: $id";
+		$Pantalla=Pantalla::find($id);
+ 
+		// Si no existe ese Pantalla devolvemos un error.
+		if (!$Pantalla)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Pantalla con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Pantalla],200);
 	}
  
 	/**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+// Necesitaremos el modelo Categoria para ciertas tareas.
+use App\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -17,7 +19,13 @@ class CategoriaController extends Controller
 	public function index()
 	{
 		// Devolverá todos las Categorias.
-		return "Mostrando todos las Categorias de la base de datos.";
+		//return "Mostrando todos las Categorias de la base de datos.";
+		// return Categoria::all();  No es lo más correcto por que se devolverían todos los registros. Se recomienda usar Filtros.
+		// Se debería devolver un objeto con una propiedad como mínimo data y el array de resultados en esa propiedad.
+		// A su vez también es necesario devolver el código HTTP de la respuesta.
+		//php http://elbauldelprogramador.com/buenas-practicas-para-el-diseno-de-una-api-RESTful-pragmatica/
+		// https://cloud.google.com/storage/docs/json_api/v1/status-codes
+		return response()->json(['status'=>'ok','data'=>Categoria::all()], 200);
 	}
  
 	/**
@@ -50,8 +58,18 @@ class CategoriaController extends Controller
 	 */
 	public function show($id)
 	{
-		//
-		return "Se muestra Categoria con id: $id";
+		//return "Se muestra Categoria con id: $id";
+		$Categoria=Categoria::find($id);
+ 
+		// Si no existe ese Categoria devolvemos un error.
+		if (!$Categoria)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Categoria con ese código.'])],404);
+		}
+ 
+		return response()->json(['status'=>'ok','data'=>$Categoria],200);
 	}
  
 	/**
