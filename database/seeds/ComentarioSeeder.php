@@ -33,8 +33,8 @@ class ComentarioSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Comentario::create(
 				[
-					'IdUsuario'=>$faker->numberBetween(1,$cuantos),
-					'IdVideo'=>$faker->numberBetween(1,$cuantos2),
+					'Usuario_id'=>$faker->numberBetween(1,$cuantos),
+					'Video_id'=>$faker->numberBetween(1,$cuantos2),
 					'Comentario'=>$faker->text(200),
 					'Fecha'=>$faker->date('Y-m-d')
 				]

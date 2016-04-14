@@ -17,6 +17,7 @@ class PantallaCategoriaController extends Controller
 	 * @return Response
 	 */
 	public function index($idCategoria)
+	{
 		// Devolverá todos las pantallas.
 		//return "Mostrando las pantallas de la categoria con Id $idCategoria";
 		$Categoria=Categoria::find($idCategoria);

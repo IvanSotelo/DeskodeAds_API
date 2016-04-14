@@ -11,7 +11,7 @@ class Cliente extends Model
 	protected $primaryKey = 'IdCliente';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdUsuario','Nombre','Telefono','Direccion','EMail','RFC');
+	protected $fillable = array('Usuario_id','Nombre','Telefono','Direccion','EMail','RFC');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

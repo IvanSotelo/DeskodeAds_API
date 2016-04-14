@@ -32,7 +32,7 @@ class PantallaSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Pantalla::create(
 				[
-					'IdCategoria'=>$faker->numberBetween(1,$cuantos),
+					'Categoria_id'=>$faker->numberBetween(1,$cuantos),
 					'Ubicacion'=>$faker->company(),
 					'Lat'=>$faker->latitude(-90,90),
 					'Lng'=>$faker->longitude(-180,180)

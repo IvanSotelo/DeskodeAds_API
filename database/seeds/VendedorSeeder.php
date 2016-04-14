@@ -31,7 +31,7 @@ class VendedorSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Vendedor::create(
 				[
-					'IdUsuario'=>$id,
+					'Usuario_id'=>$id,
 					'Nombre'=>$faker->firstName(),
 					'Apellido'=>$faker->lastName(),
 					'Telefono'=>$faker->phoneNumber()

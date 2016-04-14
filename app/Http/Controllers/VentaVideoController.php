@@ -11,6 +11,13 @@ use App\Venta;
 
 class VentaVideoController extends Controller
 {
+	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
+	// pero solamente para los métodos de crear, actualizar y borrar.
+	public function __construct()
+	{
+		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+	}
+ 
 	/**
 	 * Display a listing of the resource.
 	 *

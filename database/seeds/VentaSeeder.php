@@ -33,8 +33,8 @@ class VentaSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Venta::create(
 				[
-					'IdCliente'=>$faker->numberBetween(1,$cuantos),
-					'IdVendedor'=>$faker->numberBetween(1,$cuantos1),
+					'Cliente_id'=>$faker->numberBetween(1,$cuantos),
+					'Vendedor_id'=>$faker->numberBetween(1,$cuantos1),
 					'Estatus'=>$faker->randomElement($array = array ('Pendiente','Pagado')),
 					'Precio'=>$faker->randomNumber(9),
 					'Paquete'=>$faker->randomElement($array = array ('Individual','Doble'))

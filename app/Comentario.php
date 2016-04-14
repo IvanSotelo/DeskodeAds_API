@@ -11,7 +11,7 @@ class Comentario extends Model
 	protected $primaryKey = 'IdComentario';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdVideo','IdUsuario','Comentario','Fecha');
+	protected $fillable = array('Video_id','Usuario_id','Comentario','Fecha');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

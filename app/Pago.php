@@ -11,7 +11,7 @@ class Pago extends Model
 	protected $primaryKey = 'IdPago';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdCliente','Pago','FechaPago','ProxPago','Estatus');
+	protected $fillable = array('Cliente_id','Pago','FechaPago','ProxPago','Estatus');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

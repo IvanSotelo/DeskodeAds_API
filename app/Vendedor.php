@@ -11,7 +11,7 @@ class Vendedor extends Model
 	protected $primaryKey = 'IdVendedor';
  
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('IdUsuario','Nombre','Apellido','Telefono');
+	protected $fillable = array('Usuario_id','Nombre','Apellido','Telefono');
  
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at']; 

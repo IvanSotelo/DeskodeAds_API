@@ -36,10 +36,10 @@ class VideoSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Video::create(
 				[
-					'IdCliente'=>$faker->numberBetween(1,$cuantos),
-					'IdCategoria'=>$faker->numberBetween(1,$cuantos1),
-					'IdPantalla'=>$faker->numberBetween(1,$cuantos2),
-					'IdVenta'=>$faker->numberBetween(1,$cuantos3),
+					'Cliente_id'=>$faker->numberBetween(1,$cuantos),
+					'Categoria_id'=>$faker->numberBetween(1,$cuantos1),
+					'Pantalla_id'=>$faker->numberBetween(1,$cuantos2),
+					'Venta_id'=>$faker->numberBetween(1,$cuantos3),
 					'FechaAlta'=>$faker->date('Y-m-d'),
 					'FechaBaja'=>$faker->date('Y-m-d'),
 					'URL'=>$faker->image($dir = '/tmp', $width = 640, $height = 480)

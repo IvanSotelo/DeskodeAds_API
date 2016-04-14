@@ -31,7 +31,7 @@ class PagoSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Pago::create(
 				[
-					'IdCliente'=>$faker->numberBetween(1,$cuantos),
+					'Cliente_id'=>$faker->numberBetween(1,$cuantos),
 					'Pago'=>$faker->randomNumber(9),
 					'FechaPago'=>$faker->date('Y-m-d'),
 					'ProxPago'=>$faker->date('Y-m-d')

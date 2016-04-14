@@ -17,10 +17,10 @@ class ClientesMigration extends Migration
             // Añadimos la clave foránea con Fabricante. fabricante_id
             // Acordarse de añadir al array protected $fillable del fichero de modelo "Avion.php" la nueva columna:
             // protected $fillable = array('modelo','longitud','capacidad','velocidad','alcance','fabricante_id');
-            $table->integer('IdUsuario')->unsigned();
+            $table->integer('Usuario_id')->unsigned();
  
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdUsuario')->references('IdUsuario')->on('usuarios');
+            $table->foreign('Usuario_id')->references('IdUsuario')->on('usuarios');
             $table->string('Nombre');
             $table->string('Telefono');
             $table->string('Direccion');

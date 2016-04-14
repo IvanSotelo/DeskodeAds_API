@@ -31,7 +31,7 @@ class ReproduccionSeeder extends Seeder {
 			// se está creando una nueva fila en la tabla.
 			Reproduccion::create(
 				[
-					'IdVideo'=>$faker->numberBetween(1,$cuantos),
+					'Video_id'=>$faker->numberBetween(1,$cuantos),
 					'Mes'=>$faker->monthName(),
 					'Year'=>$faker->year('now'),
 					'Reproducciones'=>$faker->randomNumber(9),

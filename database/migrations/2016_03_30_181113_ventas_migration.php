@@ -14,12 +14,12 @@ class VentasMigration extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->increments('IdVenta');
-            $table->integer('IdCliente')->unsigned();
+            $table->integer('Cliente_id')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdCliente')->references('IdCliente')->on('clientes');
-            $table->integer('IdVendedor')->unsigned();
+            $table->foreign('Cliente_id')->references('IdCliente')->on('clientes');
+            $table->integer('Vendedor_id')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdVendedor')->references('IdVendedor')->on('vendedores');
+            $table->foreign('Vendedor_id')->references('IdVendedor')->on('vendedores');
             $table->string('Estatus')->default('Pendiente');
             $table->integer('Precio');
             $table->string('Paquete');

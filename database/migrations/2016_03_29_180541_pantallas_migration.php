@@ -14,9 +14,9 @@ class PantallasMigration extends Migration
     {
         Schema::create('pantallas', function (Blueprint $table) {
             $table->increments('IdPantalla');
-            $table->integer('IdCategoria')->unsigned();
+            $table->integer('Categoria_id')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('IdCategoria')->references('IdCategoria')->on('categorias');
+            $table->foreign('Categoria_id')->references('IdCategoria')->on('categorias');
             $table->string('Ubicacion');
             $table->integer('Lat');
             $table->integer('Lng');
