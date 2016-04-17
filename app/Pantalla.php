@@ -34,11 +34,11 @@ class Pantalla extends Model
 	}
 
 		// Relación de pantalla con categoria:
-	public function categoria()
+	public function categorias()
 	{	
 		// 1 pantalla tiene 1 categoria
 		// $this hace referencia al objeto que tengamos en ese momento de Pantalla.
-		return $this->hasOne('App\Categoria');
+		return $this->belongsTo('App\Categoria');
 	}
 
 }

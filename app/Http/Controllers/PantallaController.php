@@ -53,7 +53,7 @@ class PantallaController extends Controller
  
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->id)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['data'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
 		return $response;
 	}
  
@@ -87,7 +87,85 @@ class PantallaController extends Controller
 	 */
 	public function update($id)
 	{
-		//
+		// Comprobamos si el Pantalla que nos están pasando existe o no.
+		$Pantalla=Pantalla::find($id);
+ 
+		// Si no existe ese Pantalla devolvemos un error.
+		if (!$Pantalla)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Pantalla con ese código.'])],404);
+		}		
+ 
+		// Listado de campos recibidos teóricamente.
+		$Categoria_id=$request->input('Categoria_id');
+		$Ubicacion=$request->input('Ubicacion');
+		$Lat=$request->input('Lat');
+		$Lng=$request->input('Lng');
+
+		// Necesitamos detectar si estamos recibiendo una petición PUT o PATCH.
+		// El método de la petición se sabe a través de $request->method();
+		if ($request->method() === 'PATCH')
+		{
+			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
+			$bandera = false;
+ 
+			// Actualización parcial de campos.
+			if ($Categoria_id)
+			{
+				$Pantalla->Categoria_id = $Categoria_id;
+				$bandera=true;
+			}
+
+			if ($Ubicacion)
+			{
+				$Pantalla->Ubicacion = $Ubicacion;
+				$bandera=true;
+			}
+
+			if ($Lat)
+			{
+				$Pantalla->Lat = $Lat;
+				$bandera=true;
+			}
+
+			if ($Lng)
+			{
+				$Pantalla->Lng = $Lng;
+				$bandera=true;
+			}		
+ 
+			if ($bandera)
+			{
+				// Almacenamos en la base de datos el registro.
+				$Pantalla->save();
+				return response()->json(['status'=>'ok','data'=>$Pantalla], 200);
+			}
+			else
+			{
+				// Se devuelve un array errors con los errores encontrados y cabecera HTTP 304 Not Modified – [No Modificada] Usado cuando el cacheo de encabezados HTTP está activo
+				// Este código 304 no devuelve ningún body, así que si quisiéramos que se mostrara el mensaje usaríamos un código 200 en su lugar.
+				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Pantalla.'])],304);
+			}
+		}
+ 
+ 
+		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
+		if (!$Categoria_id || !$Ubicacion || !$Lat || !$Lng)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
+		}
+ 
+		$Pantalla->Categoria_id = $Categoria_id;
+		$Pantalla->Ubicacion = $Ubicacion;
+		$Pantalla->Lat = $Lat;
+		$Pantalla->Lng = $Lng;
+ 
+		// Almacenamos en la base de datos el registro.
+		$Pantalla->save();
+		return response()->json(['status'=>'ok','data'=>$Pantalla], 200);
 	}
  
 	/**

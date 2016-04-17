@@ -60,7 +60,7 @@ class CategoriaController extends Controller
  
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoCategoria]), 201)->header('Location', 'http://ads.deskode.local/api/categorias/'.$nuevoCategoria->id)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['data'=>$nuevoCategoria]), 201)->header('Location', 'http://ads.deskode.local/api/categorias/'.$nuevoCategoria->IdCategoria)->header('Content-Type', 'application/json');
 		return $response;
 	}
  
@@ -94,7 +94,61 @@ class CategoriaController extends Controller
 	 */
 	public function update($id)
 	{
-		//
+		// Comprobamos si el Categoria que nos están pasando existe o no.
+		$Categoria=Categoria::find($id);
+ 
+		// Si no existe ese Categoria devolvemos un error.
+		if (!$Categoria)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Categoria con ese código.'])],404);
+		}		
+ 
+		// Listado de campos recibidos teóricamente.
+		$Categoria1=$request->input('Categoria');
+
+		// Necesitamos detectar si estamos recibiendo una petición PUT o PATCH.
+		// El método de la petición se sabe a través de $request->method();
+		if ($request->method() === 'PATCH')
+		{
+			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
+			$bandera = false;
+ 
+			// Actualización parcial de campos.
+			if ($Categoria1)
+			{
+				$Categoria->Categoria = $Categoria1;
+				$bandera=true;
+			}
+ 
+			if ($bandera)
+			{
+				// Almacenamos en la base de datos el registro.
+				$Categoria->save();
+				return response()->json(['status'=>'ok','data'=>$Categoria], 200);
+			}
+			else
+			{
+				// Se devuelve un array errors con los errores encontrados y cabecera HTTP 304 Not Modified – [No Modificada] Usado cuando el cacheo de encabezados HTTP está activo
+				// Este código 304 no devuelve ningún body, así que si quisiéramos que se mostrara el mensaje usaríamos un código 200 en su lugar.
+				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Categoria.'])],304);
+			}
+		}
+ 
+ 
+		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
+		if (!$Categoria1)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
+		}
+ 
+		$Categoria->Categoria = $Categoria1;
+
+		// Almacenamos en la base de datos el registro.
+		$Categoria->save();
+		return response()->json(['status'=>'ok','data'=>$Categoria], 200);
 	}
  
 	/**

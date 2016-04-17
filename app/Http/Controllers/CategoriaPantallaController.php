@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Pantalla;
 use App\Categoria;
 
-class PantallaCategoriaController extends Controller
+class CategoriaPantallaController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
@@ -32,16 +32,5 @@ class PantallaCategoriaController extends Controller
 		}
 		return response()->json(['status'=>'ok','data'=>$Categoria->pantallas()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Categoria->aviones],200);
-	} 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($idCategoria,$idPantalla)
-	{
-		//
-		return "Se muestra la Pantalla $idPantalla de la Categoria $idCategoria";
 	}
 }

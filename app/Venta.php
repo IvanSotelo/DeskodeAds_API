@@ -26,15 +26,15 @@ class Venta extends Model
 	//  etc..
  
 	// Relación de venta con video:
-	public function video()
+	public function videos()
 	{	
 		// 1 venta tiene un video
 		// $this hace referencia al objeto que tengamos en ese momento de Venta.
-		return $this->hasOne('App\Video');
+		return $this->hasMany('App\Video');
 	}
 
 	// Relación de venta con cliente:
-	public function cliente()
+	public function clientes()
 	{	
 		// 1 venta pertenece a un cliente
 		// $this hace referencia al objeto que tengamos en ese momento de Venta.
@@ -42,7 +42,7 @@ class Venta extends Model
 	}
 
 		// Relación de venta con vendedor:
-	public function vendedor()
+	public function vendedores()
 	{	
 		// 1 venta pertenece a un vendedor
 		// $this hace referencia al objeto que tengamos en ese momento de Venta.

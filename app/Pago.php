@@ -26,7 +26,7 @@ class Pago extends Model
 	//  etc..
  
 	// Relación de pago con cliente:
-	public function cliente()
+	public function clientes()
 	{	
 		// 1 pago pertenece a un cliente
 		// $this hace referencia al objeto que tengamos en ese momento de Pago.

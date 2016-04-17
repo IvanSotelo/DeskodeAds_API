@@ -30,7 +30,7 @@ class Categoria extends Model
 	{	
 		// 1 categoria esta en muchos videos
 		// $this hace referencia al objeto que tengamos en ese momento de Categoria.
-		return $this->belongsToMany('App\Video');
+		return $this->belongsTo('App\Video');
 	}
 
 	// Relación de Categoria con Pantallas:
@@ -38,6 +38,6 @@ class Categoria extends Model
 	{	
 		// 1 categoria esta en muchas pantallas
 		// $this hace referencia al objeto que tengamos en ese momento de Categoria.
-		return $this->belongsToMany('App\Pantalla');
+		return $this->hasMany('App\Pantalla');
 	}
 }

@@ -26,7 +26,7 @@ class Vendedor extends Model
 	//  etc..
  
 	// Relación de Vendedor con usuarios:
-	public function usuario()
+	public function usuarios()
 	{	
 		// 1 vendedor pertenece a un usuario
 		// $this hace referencia al objeto que tengamos en ese momento de Vendedor.

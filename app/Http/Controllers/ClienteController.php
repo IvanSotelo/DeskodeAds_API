@@ -87,7 +87,93 @@ class ClienteController extends Controller
 	 */
 	public function update($id)
 	{
-		//
+		// Comprobamos si el Cliente que nos están pasando existe o no.
+		$Cliente=Cliente::find($id);
+ 
+		// Si no existe ese Cliente devolvemos un error.
+		if (!$Cliente)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
+		}		
+ 
+		// Listado de campos recibidos teóricamente.
+		$nombre=$request->input('Nombre');
+		$telefono=$request->input('Telefono');
+		$direccion=$request->input('Direccion');
+		$email=$request->input('EMail');
+		$rfc=$request->input('RFC');
+ 
+		// Necesitamos detectar si estamos recibiendo una petición PUT o PATCH.
+		// El método de la petición se sabe a través de $request->method();
+		if ($request->method() === 'PATCH')
+		{
+			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
+			$bandera = false;
+ 
+			// Actualización parcial de campos.
+			if ($nombre)
+			{
+				$Cliente->Nombre = $nombre;
+				$bandera=true;
+			}
+
+			if ($telefono)
+			{
+				$Cliente->Telefono = $telefono;
+				$bandera=true;
+			}			
+ 
+			if ($direccion)
+			{
+				$Cliente->Direccion = $direccion;
+				$bandera=true;
+			}
+ 
+ 			if ($email)
+			{
+				$Cliente->EMail = $email;
+				$bandera=true;
+			}
+
+			if ($rfc)
+			{
+				$Cliente->RFC = $rfc;
+				$bandera=true;
+			}
+
+			if ($bandera)
+			{
+				// Almacenamos en la base de datos el registro.
+				$Cliente->save();
+				return response()->json(['status'=>'ok','data'=>$Cliente], 200);
+			}
+			else
+			{
+				// Se devuelve un array errors con los errores encontrados y cabecera HTTP 304 Not Modified – [No Modificada] Usado cuando el cacheo de encabezados HTTP está activo
+				// Este código 304 no devuelve ningún body, así que si quisiéramos que se mostrara el mensaje usaríamos un código 200 en su lugar.
+				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Cliente.'])],304);
+			}
+		}
+ 
+ 
+		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
+		if (!$nombre || !$telefono || !$direccion || !$email || !$rfc)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
+		}
+ 
+		$Cliente->Nombre = $nombre;
+		$Cliente->Telefono = $telefono;
+		$Cliente->Direccion = $direccion;
+		$Cliente->EMail = $email;
+		$Cliente->RFC = $rfc;
+ 
+		// Almacenamos en la base de datos el registro.
+		$Cliente->save();
+		return response()->json(['status'=>'ok','data'=>$Cliente], 200);
 	}
  
 	/**

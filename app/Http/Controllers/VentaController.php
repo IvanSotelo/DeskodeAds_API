@@ -54,7 +54,7 @@ class VentaController extends Controller
  
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoVenta]), 201)->header('Location', 'http://ads.deskode.local/api/ventas/'.$nuevoVenta->id)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['data'=>$nuevoVenta]), 201)->header('Location', 'http://ads.deskode.local/api/ventas/'.$nuevoVenta->IdVenta)->header('Content-Type', 'application/json');
 		return $response;
 	}
  
@@ -88,7 +88,93 @@ class VentaController extends Controller
 	 */
 	public function update($id)
 	{
-		//
+		// Comprobamos si el Venta que nos están pasando existe o no.
+		$Venta=Venta::find($id);
+ 
+		// Si no existe ese Venta devolvemos un error.
+		if (!$Venta)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un venta con ese código.'])],404);
+		}		
+ 
+		// Listado de campos recibidos teóricamente.
+		$Cliente_id=$request->input('Cliente_id');
+		$Vendedor_id=$request->input('Vendedor_id');
+		$Estatus=$request->input('Estatus');
+		$Precio=$request->input('Precio');
+		$Paquete=$request->input('Paquete');
+
+		// Necesitamos detectar si estamos recibiendo una petición PUT o PATCH.
+		// El método de la petición se sabe a través de $request->method();
+		if ($request->method() === 'PATCH')
+		{
+			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
+			$bandera = false;
+ 
+			// Actualización parcial de campos.
+			if ($Cliente_id)
+			{
+				$Venta->Cliente_id = $Cliente_id;
+				$bandera=true;
+			}
+
+			if ($Vendedor_id)
+			{
+				$Venta->Vendedor_id = $Vendedor_id;
+				$bandera=true;
+			}
+
+			if ($Estatus)
+			{
+				$Venta->Estatus = $Estatus;
+				$bandera=true;
+			}
+
+			if ($Precio)
+			{
+				$Venta->Precio = $Precio;
+				$bandera=true;
+			}
+
+			if ($Paquete)
+			{
+				$Venta->Paquete = $Paquete;
+				$bandera=true;
+			}			
+ 
+			if ($bandera)
+			{
+				// Almacenamos en la base de datos el registro.
+				$Venta->save();
+				return response()->json(['status'=>'ok','data'=>$Venta], 200);
+			}
+			else
+			{
+				// Se devuelve un array errors con los errores encontrados y cabecera HTTP 304 Not Modified – [No Modificada] Usado cuando el cacheo de encabezados HTTP está activo
+				// Este código 304 no devuelve ningún body, así que si quisiéramos que se mostrara el mensaje usaríamos un código 200 en su lugar.
+				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Venta.'])],304);
+			}
+		}
+ 
+ 
+		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
+		if (!$Cliente_id || !$Vendedor_id || !$Estatus || !$Precio || !$Paquete)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
+			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
+		}
+ 
+		$Venta->Cliente_id = $Cliente_id;
+		$Venta->Vendedor_id = $Vendedor_id;
+		$Venta->Estatus = $Estatus;
+		$Venta->Precio = $Precio;
+		$Venta->Paquete = $Paquete;
+ 
+		// Almacenamos en la base de datos el registro.
+		$Venta->save();
+		return response()->json(['status'=>'ok','data'=>$Venta], 200);
 	}
  
 	/**

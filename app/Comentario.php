@@ -26,7 +26,7 @@ class Comentario extends Model
 	//  etc..
  
 	// Relación de Comentarios con videos:
-	public function video()
+	public function videos()
 	{	
 		// 1 comentario pertenece a un video
 		// $this hace referencia al objeto que tengamos en ese momento de Comentario.
@@ -34,7 +34,7 @@ class Comentario extends Model
 	}
 
 	// Relación de Comentarios con usuarios:
-	public function usuario()
+	public function usuarios()
 	{	
 		// 1 comentario pertenece a un usuario
 		// $this hace referencia al objeto que tengamos en ese momento de Comentario.

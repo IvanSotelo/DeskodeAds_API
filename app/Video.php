@@ -26,7 +26,7 @@ class Video extends Model
 	//  etc..
  
 	// Relación de video con cliente:
-	public function cliente()
+	public function clientes()
 	{	
 		// 1 video pertenece a un cliente
 		// $this hace referencia al objeto que tengamos en ese momento de Video.
@@ -34,7 +34,7 @@ class Video extends Model
 	}
 
 		// Relación de video con categoria:
-	public function categoria()
+	public function categorias()
 	{	
 		// 1 video tiene una categoria
 		// $this hace referencia al objeto que tengamos en ese momento de Video.
@@ -66,7 +66,7 @@ class Video extends Model
 	}
 
 	// Relación de video con venta:
-	public function venta()
+	public function ventas()
 	{	
 		// 1 video pertenece a una venta
 		// $this hace referencia al objeto que tengamos en ese momento de Video.

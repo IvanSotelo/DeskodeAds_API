@@ -12,6 +12,7 @@
 */
 Route::group(['prefix' => 'api'], function () {
 	Route::resource('categorias','CategoriaController',['except'=>['edit','create'] ]);
+	Route::resource('categorias.pantallas','CategoriaPantallaController',['only'=>['index','show'] ]);
 	Route::resource('pantallas.categorias','PantallaCategoriaController',['only'=>['index','show'] ]);
 	Route::resource('clientes','ClienteController',['except'=>['edit','create'] ]);
 	Route::resource('clientes.pagos','ClientePagoController',['except'=>['edit','create','show'] ]);

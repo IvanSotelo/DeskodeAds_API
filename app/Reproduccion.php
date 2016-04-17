@@ -26,7 +26,7 @@ class Reproduccion extends Model
 	//  etc..
  
 	// Relación de pantalla con video:
-	public function video()
+	public function videos()
 	{	
 		// 1 reproduccion pertenece a 1 video
 		// $this hace referencia al objeto que tengamos en ese momento de Reproduccion.

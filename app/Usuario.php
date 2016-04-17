@@ -30,7 +30,7 @@ class Usuario extends Model
  
  
 	// Relación de usuario con clientes:
-	public function cliente()
+	public function clientes()
 	{
 		// 1 usuario pertenece a un cliente.
 		// $this hace referencia al objeto que tengamos en ese momento de Usuario.
@@ -38,7 +38,7 @@ class Usuario extends Model
 	}
 
 		// Relación de usuario con vendedores:
-	public function vendedor()
+	public function vendedores()
 	{
 		// 1 usuario pertenece a un vendedor.
 		// $this hace referencia al objeto que tengamos en ese momento de Usuario.

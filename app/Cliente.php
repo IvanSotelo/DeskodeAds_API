@@ -42,7 +42,7 @@ class Cliente extends Model
 	}
 
 	// Relación de Cliente con usuarios:
-	public function usuario()
+	public function usuarios()
 	{	
 		// 1 cliente pertenece a un usuario
 		// $this hace referencia al objeto que tengamos en ese momento de Cliente.
