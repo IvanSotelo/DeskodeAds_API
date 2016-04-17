@@ -159,6 +159,43 @@ class CategoriaController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		// Primero eliminaremos todos los videos y las pantallas de un Categoria y luego el Categoria en si mismo.
+		// Comprobamos si el Categoria que nos están pasando existe o no.
+		$Categoria=Categoria::find($id);
+ 
+		// Si no existe ese Categoria devolvemos un error.
+		if (!$Categoria)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Categoria con ese código.'])],404);
+		}		
+ 
+		// El Categoria existe entonces buscamos todos los videos asociados a ese Categoria.
+		$videos = $Categoria->videos; // Sin paréntesis obtenemos el array de todos los videos.
+ 
+		// Comprobamos si tiene videos ese Categoria.
+		if (sizeof($videos) > 0)
+		{
+			// Devolveremos un código 409 Conflict - [Conflicto] Cuando hay algún conflicto al procesar una petición, por ejemplo en PATCH, POST o DELETE.
+			return response()->json(['code'=>409,'message'=>'Esta Categoria posee videos y no puede ser eliminado.'],409);
+		}
+
+		// El Categoria existe entonces buscamos todos los pantallas asociados a ese Categoria.
+		$pantallas = $Categoria->pantallas; // Sin paréntesis obtenemos el array de todos los pantallas.
+ 
+		// Comprobamos si tiene pantallas ese Categoria.
+		if (sizeof($pantallas) > 0)
+		{
+			// Devolveremos un código 409 Conflict - [Conflicto] Cuando hay algún conflicto al procesar una petición, por ejemplo en PATCH, POST o DELETE.
+			return response()->json(['code'=>409,'message'=>'Esta Categoria posee pantallas y no puede ser eliminado.'],409);
+		}
+ 
+		// Procedemos por lo tanto a eliminar el Categoria.
+		$Categoria->delete();
+ 
+		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
+		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
+		return response()->json(['code'=>204,'message'=>'Se ha eliminado la Categoria correctamente.'],204);
 	}
 }

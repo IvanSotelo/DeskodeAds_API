@@ -168,6 +168,23 @@ class VendedorController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+	// Primero eliminaremos todos los videos de un Vendedor y luego el Vendedor en si mismo.
+		// Comprobamos si el CVendedorque nos están pasando existe o no.
+		$Vendedor=Vendedor::find($id);
+ 
+		// Si no existe ese Vendedor devolvemos un error.
+		if (!$Vendedor)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Vendedor con ese código.'])],404);
+		}		
+  
+		// Procedemos por lo tanto a eliminar el Vendedor.
+		$Vendedor->delete();
+ 
+		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
+		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
+		return response()->json(['code'=>204,'message'=>'Se ha eliminado el Vendedor correctamente.'],204);
 	}
 }

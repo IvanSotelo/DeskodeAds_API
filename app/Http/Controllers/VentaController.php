@@ -185,6 +185,33 @@ class VentaController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+	// Primero eliminaremos todos los videos de un Venta y luego el Venta en si mismo.
+		// Comprobamos si el Venta que nos están pasando existe o no.
+		$Venta=Venta::find($id);
+ 
+		// Si no existe ese Venta devolvemos un error.
+		if (!$Venta)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Venta con ese código.'])],404);
+		}		
+ 
+		// El Venta existe entonces buscamos todos los videos asociados a ese Venta.
+		$videos = $Venta->videos; // Sin paréntesis obtenemos el array de todos los videos.
+ 
+		// Comprobamos si tiene videos ese Venta.
+		if (sizeof($videos) > 0)
+		{
+			// Devolveremos un código 409 Conflict - [Conflicto] Cuando hay algún conflicto al procesar una petición, por ejemplo en PATCH, POST o DELETE.
+			return response()->json(['code'=>409,'message'=>'Esta Venta posee videos y no puede ser eliminado.'],409);
+		}
+ 
+		// Procedemos por lo tanto a eliminar el Venta.
+		$Venta->delete();
+ 
+		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
+		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
+		return response()->json(['code'=>204,'message'=>'Se ha eliminado la Venta correctamente.'],204);
 	}
 }

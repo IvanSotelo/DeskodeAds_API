@@ -196,6 +196,33 @@ class VideoComentarioController extends Controller
 	 */
 	public function destroy($idVideo,$idComentario)
 	{
-		//
+		// Comprobamos si el Video que nos están pasando existe o no.
+		$Video=Video::find($idVideo);
+ 
+		// Si no existe ese Video devolvemos un error.
+		if (!$Video)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
+		}		
+ 
+		// El Video existe entonces buscamos el Comentario que queremos borrar asociado a ese Video.
+		$Comentario = $Video->comentarios()->find($idComentario);
+ 
+		// Si no existe ese Comentario devolvemos un error.
+		if (!$Comentario)
+		{
+			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Comentario con ese código asociado a ese Video.'])],404);
+		}
+ 
+		// Procedemos por lo tanto a eliminar el Comentario.
+		$Comentario->delete();
+ 
+		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
+		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
+		return response()->json(['code'=>204,'message'=>'Se ha eliminado el Comentario correctamente.'],204);
 	}
 }

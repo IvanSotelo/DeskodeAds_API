@@ -11,13 +11,6 @@ use App\Venta;
 
 class VentaVideoController extends Controller
 {
-	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
-	// pero solamente para los métodos de crear, actualizar y borrar.
-	public function __construct()
-	{
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
-	}
- 
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -41,27 +34,6 @@ class VentaVideoController extends Controller
 	}
  
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create($idVenta)
-	{
-		//
-		return "Se muestra formulario para crear un Video de la Venta $idVenta.";
-	}
- 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
- 
-	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
@@ -71,39 +43,5 @@ class VentaVideoController extends Controller
 	{
 		//
 		return "Se muestra Video $idVideo de la Venta $idVenta";
-	}
- 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($idVenta,$idVideo)
-	{
-		//
-		return "Se muestra formulario para editar el Video $idVideo de la Venta $idVenta";
-	}
- 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($idVenta,$idVideo)
-	{
-		//
-	}
- 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($idVenta,$idVideo)
-	{
-		//
 	}
 }
