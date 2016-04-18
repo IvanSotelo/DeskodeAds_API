@@ -8,6 +8,9 @@ use App\Http\Requests;
 // Necesitaremos el modelo Reproduccion para ciertas tareas.
 use App\Reproduccion;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 class ReproduccionController extends Controller
 {
 
@@ -18,7 +21,16 @@ class ReproduccionController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Reproduccion::all()], 200);
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $reproducciones=Cache::remember('reproducciones',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Reproduccion::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$reproducciones], 200);
+		//return response()->json(['status'=>'ok','data'=>Reproduccion::all()], 200);
 	}
  
 	/**

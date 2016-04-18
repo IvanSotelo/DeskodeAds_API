@@ -11,6 +11,9 @@ use App\Http\Controllers\Controller;
 use App\Video;
 use App\Comentario;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitamos la clase Response para crear la respuesta especial con la cabecera de localización en el método Store()
 use Response;
 
@@ -40,8 +43,22 @@ class VideoComentarioController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
 		}
+
+ 		// Activamos la caché de los resultados.
+		// Como el closure necesita acceder a la variable $ fabricante tenemos que pasársela con use($fabricante)
+		// Para acceder a los modelos no haría falta puesto que son accesibles a nivel global dentro de la clase.
+		//  Cache::remember('tabla', $minutes, function()
+		$Comentarios=Cache::remember('claveComentarios',2, function() use ($Video)
+		{
+			// Caché válida durante 2 minutos.
+			return $Video->comentarios()->get();
+		});
  
-		return response()->json(['status'=>'ok','data'=>$Video->comentarios()->get()],200);
+		// Respuesta con caché:
+		return response()->json(['status'=>'ok','data'=>$Comentarios],200);
+ 
+		// Respuesta sin caché:
+		//return response()->json(['status'=>'ok','data'=>$Video->comentarios()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Video->aviones],200);
 	}
 
@@ -138,19 +155,19 @@ class VideoComentarioController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Usuario_id)
+			if ($Usuario_id!=null&&$Usuario_id!='')
 			{
 				$Comentario->Usuario_id = $Usuario_id;
 				$bandera=true;
 			}
  
-			if ($Comentario1)
+			if ($Comentario1!=null&&$Comentario1!='')
 			{
 				$Comentario->Comentario = $Comentario1;
 				$bandera=true;
 			}
  
-			if ($Fecha)
+			if ($Fecha!=null&&$Fecha!='')
 			{
 				$Comentario->Fecha = $Fecha;
 				$bandera=true;

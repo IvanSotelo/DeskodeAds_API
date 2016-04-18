@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Vendedor para ciertas tareas.
 use App\Vendedor;
 
@@ -29,7 +32,16 @@ class VendedorController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Vendedor::all()], 200);
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $vendedores=Cache::remember('vendedores',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Vendedor::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$vendedores], 200);
+		//return response()->json(['status'=>'ok','data'=>Vendedor::all()], 200);
 	}
  
 	/**
@@ -111,19 +123,19 @@ class VendedorController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($nombre)
+			if ($nombre!=null&&$nombre!='')
 			{
 				$Vendedor->Nombre = $nombre;
 				$bandera=true;
 			}
 
-			if ($apellido)
+			if ($apellido!=null&&$apellido!='')
 			{
 				$Vendedor->Apellido = $apellido;
 				$bandera=true;
 			}
 
-			if ($telefono)
+			if ($telefono!=null&&$telefono!='')
 			{
 				$Vendedor->Telefono = $telefono;
 				$bandera=true;

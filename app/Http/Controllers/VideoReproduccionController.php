@@ -11,6 +11,9 @@ use App\Http\Controllers\Controller;
 use App\Video;
 use App\Reproduccion;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitamos la clase Response para crear la respuesta especial con la cabecera de localización en el método Store()
 use Response;
 
@@ -40,8 +43,22 @@ class VideoReproduccionController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
 		}
+
+ 		// Activamos la caché de los resultados.
+		// Como el closure necesita acceder a la variable $ fabricante tenemos que pasársela con use($fabricante)
+		// Para acceder a los modelos no haría falta puesto que son accesibles a nivel global dentro de la clase.
+		//  Cache::remember('tabla', $minutes, function()
+		$Reproducciones=Cache::remember('claveReproducciones',2, function() use ($Video)
+		{
+			// Caché válida durante 2 minutos.
+			return $Video->reproducciones()->get();
+		});
  
-		return response()->json(['status'=>'ok','data'=>$Video->reproducciones()->get()],200);
+		// Respuesta con caché:
+		return response()->json(['status'=>'ok','data'=>$Reproducciones],200);
+ 
+		// Respuesta sin caché: 
+		//return response()->json(['status'=>'ok','data'=>$Video->reproducciones()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Video->aviones],200);
 	}
  
@@ -139,25 +156,25 @@ class VideoReproduccionController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Mes)
+			if ($Mes!=null&&$Mes!='')
 			{
 				$Reproduccion->Mes = $Mes;
 				$bandera=true;
 			}
  
-			if ($Year)
+			if ($Year!=null&&$Year!='')
 			{
 				$Reproduccion->Year = $Year;
 				$bandera=true;
 			}
  
-			if ($Reproducciones)
+			if ($Reproducciones!=null&&$Reproducciones!='')
 			{
 				$Reproduccion->Reproducciones = $Reproducciones;
 				$bandera=true;
 			}
  
-			if ($Vistas)
+			if ($Vistas!=null&&$Vistas!='')
 			{
 				$Reproduccion->Vistas = $Vistas;
 				$bandera=true;

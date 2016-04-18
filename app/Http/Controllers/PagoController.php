@@ -8,6 +8,9 @@ use App\Http\Requests;
 // Necesitaremos el modelo Pago para ciertas tareas.
 use App\Pago;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 class PagoController extends Controller
 {
  
@@ -18,7 +21,16 @@ class PagoController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Pago::all()], 200);
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $pagos=Cache::remember('pagos',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Pago::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$pagos], 200);
+		//return response()->json(['status'=>'ok','data'=>Pago::all()], 200);
 	}
  
 	/**

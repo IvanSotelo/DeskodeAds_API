@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Pantalla para ciertas tareas.
 use App\Pantalla;
 
@@ -29,7 +32,15 @@ class PantallaController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Pantalla::all()], 200);
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $pantallas=Cache::remember('pantallas',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Pantalla::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$pantallas], 200);
 	}
   
 	/**
@@ -112,25 +123,25 @@ class PantallaController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Categoria_id)
+			if ($Categoria_id!=null&&$Categoria_id!='')
 			{
 				$Pantalla->Categoria_id = $Categoria_id;
 				$bandera=true;
 			}
 
-			if ($Ubicacion)
+			if ($Ubicacion!=null&&$Ubicación!='')
 			{
 				$Pantalla->Ubicacion = $Ubicacion;
 				$bandera=true;
 			}
 
-			if ($Lat)
+			if ($Lat!=null&&$Lat!='')
 			{
 				$Pantalla->Lat = $Lat;
 				$bandera=true;
 			}
 
-			if ($Lng)
+			if ($Lng!=null&&$Lng!='')
 			{
 				$Pantalla->Lng = $Lng;
 				$bandera=true;

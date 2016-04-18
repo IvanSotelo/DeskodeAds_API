@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => 'api/v1'], function () {
 	Route::resource('categorias','CategoriaController',['except'=>['edit','create'] ]);
 	Route::resource('categorias.pantallas','CategoriaPantallaController',['only'=>['index','show'] ]);
 	Route::resource('pantallas.categorias','PantallaCategoriaController',['only'=>['index','show'] ]);

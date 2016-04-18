@@ -9,6 +9,9 @@ use App\Http\Requests;
 use App\Vendedor;
 use App\Venta;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 class VendedorVentaController extends Controller
 {
 	/**
@@ -29,7 +32,21 @@ class VendedorVentaController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Vendedor con ese código.'])],404);
 		}
  
-		return response()->json(['status'=>'ok','data'=>$Vendedor->ventas()->get()],200);
+ 		// Activamos la caché de los resultados.
+		// Como el closure necesita acceder a la variable $ fabricante tenemos que pasársela con use($fabricante)
+		// Para acceder a los modelos no haría falta puesto que son accesibles a nivel global dentro de la clase.
+		//  Cache::remember('tabla', $minutes, function()
+		$Ventas=Cache::remember('claveVentas',2, function() use ($Vendedor)
+		{
+			// Caché válida durante 2 minutos.
+			return $Vendedor->ventas()->get();
+		});
+ 
+		// Respuesta con caché:
+		return response()->json(['status'=>'ok','data'=>$Ventas],200);
+ 
+		// Respuesta sin caché:
+		//return response()->json(['status'=>'ok','data'=>$Vendedor->ventas()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Vendedor->aviones],200);
 	}
  

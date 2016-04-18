@@ -17,7 +17,16 @@ class ComentarioController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Comentario::all()], 200);
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $comentarios=Cache::remember('comentarios',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Comentario::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$comentarios], 200);
+		//return response()->json(['status'=>'ok','data'=>Comentario::all()], 200);
 	}
 
 	/**

@@ -14,6 +14,9 @@ use App\Pago;
 // Necesitamos la clase Response para crear la respuesta especial con la cabecera de localización en el método Store()
 use Response;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 class ClientePagoController extends Controller
 {
 	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
@@ -41,7 +44,21 @@ class ClientePagoController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
 		}
  
-		return response()->json(['status'=>'ok','data'=>$Cliente->pagos()->get()],200);
+ 		// Activamos la caché de los resultados.
+		// Como el closure necesita acceder a la variable $ fabricante tenemos que pasársela con use($fabricante)
+		// Para acceder a los modelos no haría falta puesto que son accesibles a nivel global dentro de la clase.
+		//  Cache::remember('tabla', $minutes, function()
+		$Pagos=Cache::remember('clavePagos',2, function() use ($Cliente)
+		{
+			// Caché válida durante 2 minutos.
+			return $Cliente->pagos()->get();
+		});
+ 
+		// Respuesta con caché:
+		return response()->json(['status'=>'ok','data'=>$Pagos],200);
+ 
+		// Respuesta sin caché:
+		//return response()->json(['status'=>'ok','data'=>$Cliente->pagos()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Cliente->pagos],200);
 	}
 
@@ -139,25 +156,25 @@ class ClientePagoController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Pago1)
+			if ($Pago1!=null&&$Pago1!='')
 			{
 				$Pago->Pago = $Pago1;
 				$bandera=true;
 			}
  
-			if ($FechaPago)
+			if ($FechaPago!=null&&$FechaPago!='')
 			{
 				$Pago->FechaPago = $FechaPago;
 				$bandera=true;
 			}
  
-			if ($ProxPago)
+			if ($ProxPago!=null&&$ProxPago!='')
 			{
 				$Pago->ProxPago = $ProxPago;
 				$bandera=true;
 			}
  
-			if ($Estatus)
+			if ($Estatus!=null&&$Estatus!='')
 			{
 				$Pago->Estatus = $Estatus;
 				$bandera=true;

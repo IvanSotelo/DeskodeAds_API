@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Venta para ciertas tareas.
 use App\Venta;
 
@@ -29,8 +32,17 @@ class VentaController extends Controller
 	 */
 	public function index()
 	{
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $ventas=Cache::remember('ventas',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Venta::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$ventas], 200);
 		// Devolverá todos las ventas.
-		return response()->json(['status'=>'ok','data'=>Venta::all()], 200);
+		//return response()->json(['status'=>'ok','data'=>Venta::all()], 200);
 	}
 
 	/**
@@ -114,31 +126,31 @@ class VentaController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Cliente_id)
+			if ($Cliente_id!=null&&$Cliente_id!='')
 			{
 				$Venta->Cliente_id = $Cliente_id;
 				$bandera=true;
 			}
 
-			if ($Vendedor_id)
+			if ($Vendedor_id!=null&&$Vendedor_id!='')
 			{
 				$Venta->Vendedor_id = $Vendedor_id;
 				$bandera=true;
 			}
 
-			if ($Estatus)
+			if ($Estatus!=null&&$Estatus!='')
 			{
 				$Venta->Estatus = $Estatus;
 				$bandera=true;
 			}
 
-			if ($Precio)
+			if ($Precio!=null&&$Precio!='')
 			{
 				$Venta->Precio = $Precio;
 				$bandera=true;
 			}
 
-			if ($Paquete)
+			if ($Paquete!=null&&$Paquete!='')
 			{
 				$Venta->Paquete = $Paquete;
 				$bandera=true;

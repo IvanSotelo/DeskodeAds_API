@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Video para ciertas tareas.
 use App\Video;
 
@@ -29,8 +32,17 @@ class VideoController extends Controller
 	 */
 	public function index()
 	{
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $videos=Cache::remember('videos',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Video::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$videos], 200);
 		// Devolverá todos los videos.
-		return response()->json(['status'=>'ok','data'=>Video::all()], 200);
+		//return response()->json(['status'=>'ok','data'=>Video::all()], 200);
 	}
  
 	/**
@@ -116,43 +128,43 @@ class VideoController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Cliente_id)
+			if ($Cliente_id!=null&&$Cliente_id!='')
 			{
 				$Video->Cliente_id = $Cliente_id;
 				$bandera=true;
 			}
 
-			if ($Categoria_id)
+			if ($Categoria_id!=null&&$Categoria_id!='')
 			{
 				$Video->Categoria_id = $Categoria_id;
 				$bandera=true;
 			}
 
-			if ($Pantalla_id)
+			if ($Pantalla_id!=null&&$Pantalla_id!='')
 			{
 				$Video->Pantalla_id = $Pantalla_id;
 				$bandera=true;
 			}
 
-			if ($Venta_id)
+			if ($Venta_id!=null&&$Venta_id!='')
 			{
 				$Video->Venta_id = $Venta_id;
 				$bandera=true;
 			}
 
-			if ($FechaAlta)
+			if ($FechaAlta!=null&&$FechaAlta!='')
 			{
 				$Video->FechaAlta = $FechaAlta;
 				$bandera=true;
 			}
 
-			if ($FechaBaja)
+			if ($FechaBaja!=null&&$FechaBaja!='')
 			{
 				$Video->FechaBaja = $FechaBaja;
 				$bandera=true;
 			}
 
-			if ($URL)
+			if ($URL!=null&&$URL!='')
 			{
 				$Video->URL = $URL;
 				$bandera=true;

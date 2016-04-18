@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Cliente para ciertas tareas.
 use App\Cliente;
 
@@ -29,7 +32,16 @@ class ClienteController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(['status'=>'ok','data'=>Cliente::all()], 200);
+
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $clientes=Cache::remember('clientes',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Cliente::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$clientes], 200);
 	}
  
 	/**
@@ -113,31 +125,31 @@ class ClienteController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($nombre)
+			if ($nombre!=null&&$nombre!='')
 			{
 				$Cliente->Nombre = $nombre;
 				$bandera=true;
 			}
 
-			if ($telefono)
+			if ($telefono!=null&&$telefono!='')
 			{
 				$Cliente->Telefono = $telefono;
 				$bandera=true;
 			}			
  
-			if ($direccion)
+			if ($direccion!=null&&$direccion!='')
 			{
 				$Cliente->Direccion = $direccion;
 				$bandera=true;
 			}
  
- 			if ($email)
+ 			if ($email!=null&&$email!='')
 			{
 				$Cliente->EMail = $email;
 				$bandera=true;
 			}
 
-			if ($rfc)
+			if ($rfc!=null&&$rfc!='')
 			{
 				$Cliente->RFC = $rfc;
 				$bandera=true;

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// Activamos uso de caché.
+use Illuminate\Support\Facades\Cache;
+
 // Necesitaremos el modelo Categoria para ciertas tareas.
 use App\Categoria;
 
@@ -36,7 +39,16 @@ class CategoriaController extends Controller
 		// A su vez también es necesario devolver el código HTTP de la respuesta.
 		//php http://elbauldelprogramador.com/buenas-practicas-para-el-diseno-de-una-api-RESTful-pragmatica/
 		// https://cloud.google.com/storage/docs/json_api/v1/status-codes
-		return response()->json(['status'=>'ok','data'=>Categoria::all()], 200);
+
+	    // Activamos la caché de los resultados.
+        //  Cache::remember('tabla', $minutes, function()
+        $categorias=Cache::remember('categorias',20/60, function()
+        {
+            // Caché válida durante 20 segundos.
+            return Categoria::all();
+        });
+        // Con caché.
+        return response()->json(['status'=>'ok','data'=>$categorias], 200);
 	}
  
 	/**
@@ -116,7 +128,7 @@ class CategoriaController extends Controller
 			$bandera = false;
  
 			// Actualización parcial de campos.
-			if ($Categoria1)
+			if ($Categoria1!=null&&$Categoria1!='')
 			{
 				$Categoria->Categoria = $Categoria1;
 				$bandera=true;
