@@ -26,7 +26,7 @@ class CategoriaPantallaController extends Controller
 		// Devolverá todos las pantallas.
 		//return "Mostrando las pantallas de la categoria con Id $idCategoria";
 		$Categoria=Categoria::find($idCategoria);
- 
+
 		if (!$Categoria)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
@@ -37,15 +37,15 @@ class CategoriaPantallaController extends Controller
 		// Como el closure necesita acceder a la variable $ fabricante tenemos que pasársela con use($fabricante)
 		// Para acceder a los modelos no haría falta puesto que son accesibles a nivel global dentro de la clase.
 		//  Cache::remember('tabla', $minutes, function()
-		$pantallas=Cache::remember('clavePantallas',2, function() use ($Categoria)
+		$pantallas=Cache::remember('clavePantallas',20/60, function() use ($Categoria)
 		{
 			// Caché válida durante 2 minutos.
 			return $Categoria->pantallas()->get();
 		});
- 
+
 		// Respuesta con caché:
 		return response()->json(['status'=>'ok','data'=>$pantallas],200);
- 
+
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Categoria->pantallas()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Categoria->aviones],200);
