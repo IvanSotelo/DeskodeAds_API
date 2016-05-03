@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['prefix' => 'api/v1'], function () {
+Route::group(['prefix' => 'api/v1','before' => 'oauth'], function () {
 	Route::resource('categorias','CategoriaController',['except'=>['edit','create'] ]);
 	Route::resource('categorias.pantallas','CategoriaPantallaController',['only'=>['index','show'] ]);
 	Route::resource('pantallas.categorias','PantallaCategoriaController',['only'=>['index','show'] ]);
@@ -33,4 +33,15 @@ Route::group(['prefix' => 'api/v1'], function () {
 });
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
+Route::get('/register',function(){$user = new App\User();
+ $user->email="test@test.com";
+ $user->password = \Illuminate\Support\Facades\Hash::make("password");
+ $user->save();
+
 });

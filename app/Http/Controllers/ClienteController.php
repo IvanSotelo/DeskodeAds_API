@@ -16,15 +16,17 @@ use App\Cliente;
 // Necesitamos la clase Response para crear la respuesta especial con la cabecera de localización en el método Store()
 use Response;
 
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 class ClienteController extends Controller
 {
 	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
 	// pero solamente para los métodos de crear, actualizar y borrar.
-	public function __construct()
-	{
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
-	}
- 
+//	public function __construct()
+//	{
+//		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+//	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -43,7 +45,7 @@ class ClienteController extends Controller
         // Con caché.
         return response()->json(['status'=>'ok','data'=>$clientes], 200);
 	}
- 
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -58,17 +60,17 @@ class ClienteController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan datos necesarios para el proceso de alta.'])],422);
 		}
- 
+
 		// Insertamos una fila en Cliente con create pasándole todos los datos recibidos.
 		// En $request->all() tendremos todos los campos del formulario recibidos.
 		$nuevoCliente=Cliente::create($request->all());
- 
+
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
 		$response = Response::make(json_encode(['data'=>$nuevoCliente]), 201)->header('Location', 'http://ads.deskode.local/api/clientes/'.$nuevoCliente->IdCliente)->header('Content-Type', 'application/json');
 		return $response;
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -79,7 +81,7 @@ class ClienteController extends Controller
 	{
 		//return "Se muestra Cliente con id: $id";
 		$Cliente=Cliente::find($id);
- 
+
 		// Si no existe ese Cliente devolvemos un error.
 		if (!$Cliente)
 		{
@@ -87,7 +89,7 @@ class ClienteController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
 		}
- 
+
 		return response()->json(['status'=>'ok','data'=>$Cliente],200);
 	}
 
@@ -101,29 +103,29 @@ class ClienteController extends Controller
 	{
 		// Comprobamos si el Cliente que nos están pasando existe o no.
 		$Cliente=Cliente::find($id);
- 
+
 		// Si no existe ese Cliente devolvemos un error.
 		if (!$Cliente)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
-		}		
- 
+		}
+
 		// Listado de campos recibidos teóricamente.
 		$nombre=$request->input('Nombre');
 		$telefono=$request->input('Telefono');
 		$direccion=$request->input('Direccion');
 		$email=$request->input('EMail');
 		$rfc=$request->input('RFC');
- 
+
 		// Necesitamos detectar si estamos recibiendo una petición PUT o PATCH.
 		// El método de la petición se sabe a través de $request->method();
 		if ($request->method() === 'PATCH')
 		{
 			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
 			$bandera = false;
- 
+
 			// Actualización parcial de campos.
 			if ($nombre!=null&&$nombre!='')
 			{
@@ -135,14 +137,14 @@ class ClienteController extends Controller
 			{
 				$Cliente->Telefono = $telefono;
 				$bandera=true;
-			}			
- 
+			}
+
 			if ($direccion!=null&&$direccion!='')
 			{
 				$Cliente->Direccion = $direccion;
 				$bandera=true;
 			}
- 
+
  			if ($email!=null&&$email!='')
 			{
 				$Cliente->EMail = $email;
@@ -168,26 +170,26 @@ class ClienteController extends Controller
 				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Cliente.'])],304);
 			}
 		}
- 
- 
+
+
 		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
 		if (!$nombre || !$telefono || !$direccion || !$email || !$rfc)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
 		}
- 
+
 		$Cliente->Nombre = $nombre;
 		$Cliente->Telefono = $telefono;
 		$Cliente->Direccion = $direccion;
 		$Cliente->EMail = $email;
 		$Cliente->RFC = $rfc;
- 
+
 		// Almacenamos en la base de datos el registro.
 		$Cliente->save();
 		return response()->json(['status'=>'ok','data'=>$Cliente], 200);
 	}
- 
+
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -199,28 +201,28 @@ class ClienteController extends Controller
 	// Primero eliminaremos todos los videos de un Cliente y luego el Cliente en si mismo.
 		// Comprobamos si el Cliente que nos están pasando existe o no.
 		$Cliente=Cliente::find($id);
- 
+
 		// Si no existe ese Cliente devolvemos un error.
 		if (!$Cliente)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
-		}		
- 
+		}
+
 		// El Cliente existe entonces buscamos todos los videos asociados a ese Cliente.
 		$videos = $Cliente->videos; // Sin paréntesis obtenemos el array de todos los videos.
- 
+
 		// Comprobamos si tiene videos ese Cliente.
 		if (sizeof($videos) > 0)
 		{
 			// Devolveremos un código 409 Conflict - [Conflicto] Cuando hay algún conflicto al procesar una petición, por ejemplo en PATCH, POST o DELETE.
 			return response()->json(['code'=>409,'message'=>'Este Cliente posee videos y no puede ser eliminado.'],409);
 		}
- 
+
 		// Procedemos por lo tanto a eliminar el Cliente.
 		$Cliente->delete();
- 
+
 		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
 		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
 		return response()->json(['code'=>204,'message'=>'Se ha eliminado el Cliente correctamente.'],204);

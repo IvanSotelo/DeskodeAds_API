@@ -15,14 +15,14 @@ class DatabaseSeeder extends Seeder
 		Model::unguard();
 		$this->call('CategoriaSeeder');
 		$this->call('UsuarioSeeder');
-	   	$this->call('ClienteSeeder');
-	   	$this->call('VendedorSeeder');
-	   	$this->call('PantallaSeeder');
-	   	$this->call('VentaSeeder');	 
-	   	$this->call('VideoSeeder');
-	   	$this->call('ComentarioSeeder');
-	   	$this->call('ReproduccionSeeder');
-	   	$this->call('PagoSeeder');  	
-        // $this->call(UsersTableSeeder::class);
+	  $this->call('ClienteSeeder');
+	  $this->call('VendedorSeeder');
+	  $this->call('PantallaSeeder');
+	  $this->call('VentaSeeder');
+	  $this->call('VideoSeeder');
+	  $this->call('ComentarioSeeder');
+	  $this->call('ReproduccionSeeder');
+	  $this->call('PagoSeeder');
+    // $this->call(UsersTableSeeder::class);
     }
 }

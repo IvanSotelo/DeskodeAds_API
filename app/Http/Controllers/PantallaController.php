@@ -20,11 +20,11 @@ class PantallaController extends Controller
 {
 	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
 	// pero solamente para los métodos de crear, actualizar y borrar.
-	public function __construct()
-	{
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
-	}
- 
+	//public function __construct()
+	//{
+	//	$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+	//}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -42,7 +42,7 @@ class PantallaController extends Controller
         // Con caché.
         return response()->json(['status'=>'ok','data'=>$pantallas], 200);
 	}
-  
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -57,17 +57,17 @@ class PantallaController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan datos necesarios para el proceso de alta.'])],422);
 		}
- 
+
 		// Insertamos una fila en Pantalla con create pasándole todos los datos recibidos.
 		// En $request->all() tendremos todos los campos del formulario recibidos.
 		$nuevoPantalla=Pantalla::create($request->all());
- 
+
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
 		$response = Response::make(json_encode(['data'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
 		return $response;
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -78,7 +78,7 @@ class PantallaController extends Controller
 	{
 		//return "Se muestra Pantalla con id: $id";
 		$Pantalla=Pantalla::find($id);
- 
+
 		// Si no existe ese Pantalla devolvemos un error.
 		if (!$Pantalla)
 		{
@@ -86,10 +86,10 @@ class PantallaController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Pantalla con ese código.'])],404);
 		}
- 
+
 		return response()->json(['status'=>'ok','data'=>$Pantalla],200);
 	}
- 
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -100,15 +100,15 @@ class PantallaController extends Controller
 	{
 		// Comprobamos si el Pantalla que nos están pasando existe o no.
 		$Pantalla=Pantalla::find($id);
- 
+
 		// Si no existe ese Pantalla devolvemos un error.
 		if (!$Pantalla)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Pantalla con ese código.'])],404);
-		}		
- 
+		}
+
 		// Listado de campos recibidos teóricamente.
 		$Categoria_id=$request->input('Categoria_id');
 		$Ubicacion=$request->input('Ubicacion');
@@ -121,7 +121,7 @@ class PantallaController extends Controller
 		{
 			// Creamos una bandera para controlar si se ha modificado algún dato en el método PATCH.
 			$bandera = false;
- 
+
 			// Actualización parcial de campos.
 			if ($Categoria_id!=null&&$Categoria_id!='')
 			{
@@ -145,8 +145,8 @@ class PantallaController extends Controller
 			{
 				$Pantalla->Lng = $Lng;
 				$bandera=true;
-			}		
- 
+			}
+
 			if ($bandera)
 			{
 				// Almacenamos en la base de datos el registro.
@@ -160,25 +160,25 @@ class PantallaController extends Controller
 				return response()->json(['errors'=>array(['code'=>304,'message'=>'No se ha modificado ningún dato de Pantalla.'])],304);
 			}
 		}
- 
- 
+
+
 		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
 		if (!$Categoria_id || !$Ubicacion || !$Lat || !$Lng)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
 		}
- 
+
 		$Pantalla->Categoria_id = $Categoria_id;
 		$Pantalla->Ubicacion = $Ubicacion;
 		$Pantalla->Lat = $Lat;
 		$Pantalla->Lng = $Lng;
- 
+
 		// Almacenamos en la base de datos el registro.
 		$Pantalla->save();
 		return response()->json(['status'=>'ok','data'=>$Pantalla], 200);
 	}
- 
+
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -190,28 +190,28 @@ class PantallaController extends Controller
 		// Primero eliminaremos todos los videos de un Pantalla y luego la Pantalla en si mismo.
 		// Comprobamos si la Pantalla que nos están pasando existe o no.
 		$Pantalla=Pantalla::find($id);
- 
+
 		// Si no existe esa Pantalla devolvemos un error.
 		if (!$Pantalla)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Pantalla con ese código.'])],404);
-		}		
- 
+		}
+
 		// La Pantalla existe entonces buscamos todos los videos asociados a esa Pantalla.
 		$videos = $Pantalla->videos; // Sin paréntesis obtenemos el array de todos los videos.
- 
+
 		// Comprobamos si tiene videos esa Pantalla.
 		if (sizeof($videos) > 0)
 		{
 			// Devolveremos un código 409 Conflict - [Conflicto] Cuando hay algún conflicto al procesar una petición, por ejemplo en PATCH, POST o DELETE.
 			return response()->json(['code'=>409,'message'=>'Esta Pantalla posee videos y no puede ser eliminado.'],409);
 		}
- 
+
 		// Procedemos por lo tanto a eliminar el Pantalla.
 		$Pantalla->delete();
- 
+
 		// Se usa el código 204 No Content – [Sin Contenido] Respuesta a una petición exitosa que no devuelve un body (como una petición DELETE)
 		// Este código 204 no devuelve body así que si queremos que se vea el mensaje tendríamos que usar un código de respuesta HTTP 200.
 		return response()->json(['code'=>204,'message'=>'Se ha eliminado la Pantalla correctamente.'],204);
