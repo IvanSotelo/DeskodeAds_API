@@ -24,7 +24,7 @@ class PantallaVideoController extends Controller
 		// Devolverá todos los videos.
 		//return "Mostrando los videos de la Pantalla con Id $idPantalla";
 		$Pantalla=Pantalla::find($idPantalla);
- 
+
 		if (!$Pantalla)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
@@ -41,15 +41,15 @@ class PantallaVideoController extends Controller
 			// Caché válida durante 2 minutos.
 			return $Pantalla->videos()->get();
 		});
- 
+
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$videos],200);
- 
+		return response()->json(['videos'=>$videos],200);
+
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Pantalla->videos()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Pantalla->videos],200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *

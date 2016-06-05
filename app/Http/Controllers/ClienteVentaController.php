@@ -26,7 +26,7 @@ class ClienteVentaController extends Controller
 		// Devolverá todos los ventas.
 		//return "Mostrando los ventas del fabricante con Id $idCliente";
 		$Cliente=Cliente::find($idCliente);
- 
+
 		if (! $Cliente)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
@@ -42,15 +42,15 @@ class ClienteVentaController extends Controller
 			// Caché válida durante 2 minutos.
 			return $Cliente->ventas()->get();
 		});
- 
+
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$ventas],200);
- 
+		return response()->json(['Ventas'=>$ventas],200);
+
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Cliente->ventas()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Cliente->aviones],200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *

@@ -25,7 +25,7 @@ class VentaVideoController extends Controller
 		// Devolverá todos los videos.
 		//return "Mostrando los videos de la Venta con Id $idVenta";
 		$Venta=Venta::find($idVenta);
- 
+
 		if (! $Venta)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
@@ -42,15 +42,15 @@ class VentaVideoController extends Controller
 			// Caché válida durante 2 minutos.
 			return $Venta->videos()->get();
 		});
- 
+
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$Videos],200);
- 
+		return response()->json(['Videos'=>$Videos],200);
+
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Venta->videos()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Venta->aviones],200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *

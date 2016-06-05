@@ -40,7 +40,7 @@ class PantallaController extends Controller
             return Pantalla::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$pantallas], 200);
+        return response()->json(['Pantallas'=>$pantallas], 200);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class PantallaController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Pantalla'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -87,7 +87,7 @@ class PantallaController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra una Pantalla con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Pantalla],200);
+		return response()->json(['Pantalla'=>$Pantalla],200);
 	}
 
 	/**
@@ -151,7 +151,7 @@ class PantallaController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Pantalla->save();
-				return response()->json(['status'=>'ok','data'=>$Pantalla], 200);
+				return response()->json(['Pantalla'=>$Pantalla], 200);
 			}
 			else
 			{
@@ -176,7 +176,7 @@ class PantallaController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Pantalla->save();
-		return response()->json(['status'=>'ok','data'=>$Pantalla], 200);
+		return response()->json(['Pantalla'=>$Pantalla], 200);
 	}
 
 	/**

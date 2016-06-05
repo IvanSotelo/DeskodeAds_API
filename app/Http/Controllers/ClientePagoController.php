@@ -55,7 +55,7 @@ class ClientePagoController extends Controller
 		});
 
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$Pagos],200);
+		return response()->json(['Pagos'=>$Pagos],200);
 
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Cliente->pagos()->get()],200);
@@ -95,7 +95,7 @@ class ClientePagoController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoPago]), 201)->header('Location','http://ads.deskode.local/api/pagos/'.$nuevoPago->IdPago)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Pago'=>$nuevoPago]), 201)->header('Location','http://ads.deskode.local/api/pagos/'.$nuevoPago->IdPago)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -184,7 +184,7 @@ class ClientePagoController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Pago->save();
-				return response()->json(['status'=>'ok','data'=>$Pago], 200);
+				return response()->json(['Pago'=>$Pago], 200);
 			}
 			else
 			{
@@ -210,7 +210,7 @@ class ClientePagoController extends Controller
 		// Almacenamos en la base de datos el registro.
 		$Pago->save();
 
-		return response()->json(['status'=>'ok','data'=>$Pago], 200);
+		return response()->json(['Pago'=>$Pago], 200);
 	}
 
 	/**

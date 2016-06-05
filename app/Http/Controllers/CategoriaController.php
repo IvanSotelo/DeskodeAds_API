@@ -48,7 +48,7 @@ class CategoriaController extends Controller
             return Categoria::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$categorias], 200);
+        return response()->json(['Categorias'=>$categorias], 200);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class CategoriaController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoCategoria]), 201)->header('Location', 'http://ads.deskode.local/api/categorias/'.$nuevoCategoria->IdCategoria)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Categoria'=>$nuevoCategoria]), 201)->header('Location', 'http://ads.deskode.local/api/categorias/'.$nuevoCategoria->IdCategoria)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -95,7 +95,7 @@ class CategoriaController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Categoria con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Categoria],200);
+		return response()->json(['Categoria'=>$Categoria],200);
 	}
 
 	/**
@@ -138,7 +138,7 @@ class CategoriaController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Categoria->save();
-				return response()->json(['status'=>'ok','data'=>$Categoria], 200);
+				return response()->json(['Categoria'=>$Categoria], 200);
 			}
 			else
 			{
@@ -160,7 +160,7 @@ class CategoriaController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Categoria->save();
-		return response()->json(['status'=>'ok','data'=>$Categoria], 200);
+		return response()->json(['Categoria'=>$Categoria], 200);
 	}
 
 	/**

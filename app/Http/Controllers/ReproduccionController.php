@@ -29,10 +29,10 @@ class ReproduccionController extends Controller
             return Reproduccion::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$reproducciones], 200);
+        return response()->json(['Reproducciones'=>$reproducciones], 200);
 		//return response()->json(['status'=>'ok','data'=>Reproduccion::all()], 200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -43,7 +43,7 @@ class ReproduccionController extends Controller
 	{
 		//return "Se muestra CaReproduccion con id: $id";
 		$Reproduccion=Reproduccion::find($id);
- 
+
 		// Si no existe ese Reproduccion devolvemos un error.
 		if (!$Reproduccion)
 		{
@@ -51,7 +51,7 @@ class ReproduccionController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Reproduccion con ese código.'])],404);
 		}
- 
-		return response()->json(['status'=>'ok','data'=>$Reproduccion],200);
+
+		return response()->json(['Reproduccion'=>$Reproduccion],200);
 	}
 }

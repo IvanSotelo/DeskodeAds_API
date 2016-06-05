@@ -43,7 +43,7 @@ class ClienteController extends Controller
             return Cliente::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$clientes], 200);
+        return response()->json(['Clientes'=>$clientes], 200);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class ClienteController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoCliente]), 201)->header('Location', 'http://ads.deskode.local/api/clientes/'.$nuevoCliente->IdCliente)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Cliente'=>$nuevoCliente]), 201)->header('Location', 'http://ads.deskode.local/api/clientes/'.$nuevoCliente->IdCliente)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -90,7 +90,7 @@ class ClienteController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Cliente con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Cliente],200);
+		return response()->json(['Cliente'=>$Cliente],200);
 	}
 
 	/**
@@ -161,7 +161,7 @@ class ClienteController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Cliente->save();
-				return response()->json(['status'=>'ok','data'=>$Cliente], 200);
+				return response()->json(['Cliente'=>$Cliente], 200);
 			}
 			else
 			{
@@ -187,7 +187,7 @@ class ClienteController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Cliente->save();
-		return response()->json(['status'=>'ok','data'=>$Cliente], 200);
+		return response()->json(['Cliente'=>$Cliente], 200);
 	}
 
 	/**

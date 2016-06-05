@@ -55,7 +55,7 @@ class VideoComentarioController extends Controller
 		});
 
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$Comentarios],200);
+		return response()->json(['Comentarios'=>$Comentarios],200);
 
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Video->comentarios()->get()],200);
@@ -95,7 +95,7 @@ class VideoComentarioController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoComentario]), 201)->header('Location','http://ads.deskode.local/api/comentarios/'.$nuevoComentario->IdComentario)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Comentario'=>$nuevoComentario]), 201)->header('Location','http://ads.deskode.local/api/comentarios/'.$nuevoComentario->IdComentario)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -177,7 +177,7 @@ class VideoComentarioController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Comentario->save();
-				return response()->json(['status'=>'ok','data'=>$Comentario], 200);
+				return response()->json(['Comentario'=>$Comentario], 200);
 			}
 			else
 			{
@@ -202,7 +202,7 @@ class VideoComentarioController extends Controller
 		// Almacenamos en la base de datos el registro.
 		$Comentario->save();
 
-		return response()->json(['status'=>'ok','data'=>$Comentario], 200);
+		return response()->json(['Comentario'=>$Comentario], 200);
 	}
 
 	/**

@@ -40,7 +40,7 @@ class VideoController extends Controller
             return Video::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$videos], 200);
+        return response()->json(['status'=>'ok','videos'=>$videos], 200);
 		// Devolverá todos los videos.
 		//return response()->json(['status'=>'ok','data'=>Video::all()], 200);
 	}
@@ -66,7 +66,7 @@ class VideoController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoVideo]), 201)->header('Location', 'http://ads.deskode.local/api/videos/'.$nuevoVideo->IdVideo)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Video'=>$nuevoVideo]), 201)->header('Location', 'http://ads.deskode.local/api/videos/'.$nuevoVideo->IdVideo)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -89,7 +89,7 @@ class VideoController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Video],200);
+		return response()->json(['status'=>'ok','video'=>$Video],200);
 	}
 
 	/**
@@ -174,7 +174,7 @@ class VideoController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Video->save();
-				return response()->json(['status'=>'ok','data'=>$Video], 200);
+				return response()->json(['status'=>'ok','video'=>$Video], 200);
 			}
 			else
 			{
@@ -202,7 +202,7 @@ class VideoController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Video->save();
-		return response()->json(['status'=>'ok','data'=>$Video], 200);
+		return response()->json(['status'=>'ok','video'=>$Video], 200);
 	}
 
 	/**

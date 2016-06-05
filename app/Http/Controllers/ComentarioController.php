@@ -30,7 +30,7 @@ class ComentarioController extends Controller
             return Comentario::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$comentarios], 200);
+        return response()->json(['Comentarios'=>$comentarios], 200);
 		//return response()->json(['status'=>'ok','data'=>Comentario::all()], 200);
 	}
 
@@ -53,6 +53,6 @@ class ComentarioController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Comentario con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Comentario],200);
+		return response()->json(['Comentario'=>$Comentario],200);
 	}
 }

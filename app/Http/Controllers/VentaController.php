@@ -40,7 +40,7 @@ class VentaController extends Controller
             return Venta::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$ventas], 200);
+        return response()->json(['Ventas'=>$ventas], 200);
 		// Devolverá todos las ventas.
 		//return response()->json(['status'=>'ok','data'=>Venta::all()], 200);
 	}
@@ -66,7 +66,7 @@ class VentaController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoVenta]), 201)->header('Location', 'http://ads.deskode.local/api/ventas/'.$nuevoVenta->IdVenta)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Venta'=>$nuevoVenta]), 201)->header('Location', 'http://ads.deskode.local/api/ventas/'.$nuevoVenta->IdVenta)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -89,7 +89,7 @@ class VentaController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Venta con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Venta],200);
+		return response()->json(['Venta'=>$Venta],200);
 	}
 
 	/**
@@ -160,7 +160,7 @@ class VentaController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Venta->save();
-				return response()->json(['status'=>'ok','data'=>$Venta], 200);
+				return response()->json(['Venta'=>$Venta], 200);
 			}
 			else
 			{
@@ -186,7 +186,7 @@ class VentaController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Venta->save();
-		return response()->json(['status'=>'ok','data'=>$Venta], 200);
+		return response()->json(['Venta'=>$Venta], 200);
 	}
 
 	/**

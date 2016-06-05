@@ -40,7 +40,7 @@ class VendedorController extends Controller
             return Vendedor::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$vendedores], 200);
+        return response()->json(['Vendedores'=>$vendedores], 200);
 		//return response()->json(['status'=>'ok','data'=>Vendedor::all()], 200);
 	}
 
@@ -65,7 +65,7 @@ class VendedorController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoVendedor]), 201)->header('Location', 'http://ads.deskode.local/api/vendedores/'.$nuevoVendedor->IdVendedor)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Vendedor'=>$nuevoVendedor]), 201)->header('Location', 'http://ads.deskode.local/api/vendedores/'.$nuevoVendedor->IdVendedor)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -88,7 +88,7 @@ class VendedorController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Vendedor con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','data'=>$Vendedor],200);
+		return response()->json(['Vendedor'=>$Vendedor],200);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class VendedorController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Vendedor->save();
-				return response()->json(['status'=>'ok','data'=>$Vendedor], 200);
+				return response()->json(['Vendedor'=>$Vendedor], 200);
 			}
 			else
 			{
@@ -169,7 +169,7 @@ class VendedorController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Vendedor->save();
-		return response()->json(['status'=>'ok','data'=>$Vendedor], 200);
+		return response()->json(['Vendedor'=>$Vendedor], 200);
 	}
 
 	/**

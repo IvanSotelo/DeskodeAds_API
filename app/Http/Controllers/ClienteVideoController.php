@@ -26,7 +26,7 @@ class ClienteVideoController extends Controller
 		// Devolverá todos los videos.
 		//return "Mostrando los videos del fabricante con Id $idCliente";
 		$Cliente=Cliente::find($idCliente);
- 
+
 		if (! $Cliente)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
@@ -44,13 +44,13 @@ class ClienteVideoController extends Controller
 		});
  
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$videos],200);
- 
+		return response()->json(['Videos'=>$videos],200);
+
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Cliente->videos()->get()],200);
 		//return response()->json(['status'=>'ok','data'=>$Cliente->aviones],200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *

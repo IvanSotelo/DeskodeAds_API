@@ -55,7 +55,7 @@ class VideoReproduccionController extends Controller
 		});
 
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$Reproducciones],200);
+		return response()->json(['Reproducciones'=>$Reproducciones],200);
 
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Video->reproducciones()->get()],200);
@@ -95,7 +95,7 @@ class VideoReproduccionController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['data'=>$nuevoReproduccion]), 201)->header('Location','http://ads.deskode.local/api/reproducciones/'.$nuevoReproduccion->IdReproduccion)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Reproduccion'=>$nuevoReproduccion]), 201)->header('Location','http://ads.deskode.local/api/reproducciones/'.$nuevoReproduccion->IdReproduccion)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
@@ -184,7 +184,7 @@ class VideoReproduccionController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Reproduccion->save();
-				return response()->json(['status'=>'ok','data'=>$Reproduccion], 200);
+				return response()->json(['Reproduccion'=>$Reproduccion], 200);
 			}
 			else
 			{
@@ -210,7 +210,7 @@ class VideoReproduccionController extends Controller
 		// Almacenamos en la base de datos el registro.
 		$Reproduccion->save();
 
-		return response()->json(['status'=>'ok','data'=>$Reproduccion], 200);
+		return response()->json(['Reproduccion'=>$Reproduccion], 200);
 	}
 
 	/**

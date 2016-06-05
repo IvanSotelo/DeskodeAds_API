@@ -44,7 +44,7 @@ class CategoriaPantallaController extends Controller
 		});
 
 		// Respuesta con caché:
-		return response()->json(['status'=>'ok','data'=>$pantallas],200);
+		return response()->json(['Pantallas'=>$pantallas],200);
 
 		// Respuesta sin caché:
 		//return response()->json(['status'=>'ok','data'=>$Categoria->pantallas()->get()],200);

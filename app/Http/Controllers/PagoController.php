@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 
 class PagoController extends Controller
 {
- 
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -29,10 +29,10 @@ class PagoController extends Controller
             return Pago::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','data'=>$pagos], 200);
+        return response()->json(['Pagos'=>$pagos], 200);
 		//return response()->json(['status'=>'ok','data'=>Pago::all()], 200);
 	}
- 
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -51,7 +51,7 @@ class PagoController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Pago con ese código.'])],404);
 		}
- 
-		return response()->json(['status'=>'ok','data'=>$Pago],200);
+
+		return response()->json(['Pago'=>$Pago],200);
 	}
 }
