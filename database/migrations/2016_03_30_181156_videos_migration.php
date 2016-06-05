@@ -20,12 +20,9 @@ class VideosMigration extends Migration
             $table->integer('Categoria_id')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('Categoria_id')->references('IdCategoria')->on('categorias');
-            $table->integer('Pantalla_id')->unsigned();
-            // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('Pantalla_id')->references('IdPantalla')->on('pantallas');   
             $table->integer('Venta_id')->unsigned();
             // Indicamos cual es la clave foránea de esta tabla:
-            $table->foreign('Venta_id')->references('IdVenta')->on('ventas');           
+            $table->foreign('Venta_id')->references('IdVenta')->on('ventas');
             $table->date('FechaAlta');
             $table->date('FechaBaja')->nullable();
             $table->string('URL');
