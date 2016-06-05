@@ -1,6 +1,7 @@
 {
     "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "description": "Api para DeskodeAds",
+    "version":"v1.1",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
