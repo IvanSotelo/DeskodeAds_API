@@ -40,7 +40,7 @@ class VideoController extends Controller
             return Video::all();
         });
         // Con caché.
-        return response()->json(['status'=>'ok','videos'=>$videos], 200);
+        return response()->json(['videos'=>$videos], 200);
 		// Devolverá todos los videos.
 		//return response()->json(['status'=>'ok','data'=>Video::all()], 200);
 	}
@@ -53,7 +53,7 @@ class VideoController extends Controller
 	public function store(Request $request)
 	{
 		// Primero comprobaremos si estamos recibiendo todos los campos.
-		if (!$request->input('Cliente_id') || !$request->input('Categoria_id') || !$request->input('Pantalla_id') || !$request->input('Venta_id') || !$request->input('FechaAlta') || !$request->input('FechaBaja') || !$request->input('URL'))
+		if (!$request->input('Pantalla_id') ||!$request->input('Cliente_id') || !$request->input('Categoria_id') || !$request->input('Venta_id') || !$request->input('FechaAlta') || !$request->input('FechaBaja') || !$request->input('URL'))
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
@@ -62,7 +62,8 @@ class VideoController extends Controller
 
 		// Insertamos una fila en Video con create pasándole todos los datos recibidos.
 		// En $request->all() tendremos todos los campos del formulario recibidos.
-		$nuevoVideo=Video::create($request->all());
+		$nuevoVideo=Video::create($request->except('Pantalla_id'));
+		$nuevoVideo->pantallas()->attach($request->only('Pantalla_id'));
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
@@ -89,7 +90,7 @@ class VideoController extends Controller
 			return response()->json(['errors'=>array(['code'=>404,'message'=>'No se encuentra un Video con ese código.'])],404);
 		}
 
-		return response()->json(['status'=>'ok','video'=>$Video],200);
+		return response()->json(['video'=>$Video],200);
 	}
 
 	/**
@@ -174,7 +175,7 @@ class VideoController extends Controller
 			{
 				// Almacenamos en la base de datos el registro.
 				$Video->save();
-				return response()->json(['status'=>'ok','video'=>$Video], 200);
+				return response()->json(['video'=>$Video], 200);
 			}
 			else
 			{
@@ -202,7 +203,7 @@ class VideoController extends Controller
 
 		// Almacenamos en la base de datos el registro.
 		$Video->save();
-		return response()->json(['status'=>'ok','video'=>$Video], 200);
+		return response()->json(['video'=>$Video], 200);
 	}
 
 	/**
