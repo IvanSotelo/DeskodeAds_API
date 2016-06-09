@@ -18,9 +18,9 @@ class PantallasMigration extends Migration
             // Indicamos cual es la clave foránea de esta tabla:
             $table->foreign('Categoria_id')->references('IdCategoria')->on('categorias');
             $table->string('Ubicacion');
-            $table->integer('Lat');
-            $table->integer('Lng');
-            
+            $table->decimal('Lat',5,6);
+            $table->decimal('Lng',5,6);
+
             $table->timestamps();
         });
     }
