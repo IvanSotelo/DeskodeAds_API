@@ -51,7 +51,7 @@ class PantallaController extends Controller
 	public function store(Request $request)
 	{
 		// Primero comprobaremos si estamos recibiendo todos los campos.
-		if (!$request->input('Categoria_id') || !$request->input('Ubicacion') || !$request->input('Lat') || !$request->input('Lng'))
+		if (!$request->input('Categoria_id') || !$request->input('Ubicacion') || !$request->input('Red_id') || !$request->input('Lat') || !$request->input('Lng'))
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
@@ -112,6 +112,7 @@ class PantallaController extends Controller
 		// Listado de campos recibidos teóricamente.
 		$Categoria_id=$request->input('Categoria_id');
 		$Ubicacion=$request->input('Ubicacion');
+		$Red_id=$request->input('Red_id');
 		$Lat=$request->input('Lat');
 		$Lng=$request->input('Lng');
 
@@ -132,6 +133,12 @@ class PantallaController extends Controller
 			if ($Ubicacion!=null&&$Ubicación!='')
 			{
 				$Pantalla->Ubicacion = $Ubicacion;
+				$bandera=true;
+			}
+
+			if ($Red_id!=null&&$Red_id!='')
+			{
+				$Pantalla->Red_id = $Red_id;
 				$bandera=true;
 			}
 
@@ -163,7 +170,7 @@ class PantallaController extends Controller
 
 
 		// Si el método no es PATCH entonces es PUT y tendremos que actualizar todos los datos.
-		if (!$Categoria_id || !$Ubicacion || !$Lat || !$Lng)
+		if (!$Categoria_id || !$Ubicacion || !$Red_id || !$Lat || !$Lng)
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
@@ -171,6 +178,7 @@ class PantallaController extends Controller
 
 		$Pantalla->Categoria_id = $Categoria_id;
 		$Pantalla->Ubicacion = $Ubicacion;
+		$Pantalla->Red_id = $Red_id;
 		$Pantalla->Lat = $Lat;
 		$Pantalla->Lng = $Lng;
 

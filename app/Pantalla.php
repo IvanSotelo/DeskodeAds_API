@@ -11,7 +11,7 @@ class Pantalla extends Model
 	protected $primaryKey = 'IdPantalla';
 
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('Categoria_id','Ubicacion','Lat','Lng');
+	protected $fillable = array('Categoria_id','Ubicacion','Red_id','Lat','Lng');
 
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
 	protected $hidden = ['created_at','updated_at'];
