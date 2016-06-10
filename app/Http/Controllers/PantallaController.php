@@ -64,7 +64,7 @@ class PantallaController extends Controller
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['Pantalla'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Pantalla'=>$nuevoPantalla]), 201)->header('Location', 'http://ads.deskode.local/api/v1/pantallas/'.$nuevoPantalla->IdPantalla)->header('Content-Type', 'application/json');
 		return $response;
 	}
 

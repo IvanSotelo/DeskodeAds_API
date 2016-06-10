@@ -13,17 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 		Model::unguard();
-		$this->call('CategoriaSeeder');
-		$this->call('UsuarioSeeder');
+
 	  $this->call('ClienteSeeder');
-	  $this->call('VendedorSeeder');
-	  $this->call('PantallaSeeder');
-	  $this->call('VentaSeeder');
-	  $this->call('VideoSeeder');
-	  $this->call('ComentarioSeeder');
-	  $this->call('ReproduccionSeeder');
-	  $this->call('PagoSeeder');
-    $this->call('RelacionVideosPantallasSeeder');
+
     // $this->call(UsersTableSeeder::class);
     }
 }

@@ -16,8 +16,6 @@ use App\Cliente;
 // Necesitamos la clase Response para crear la respuesta especial con la cabecera de localización en el método Store()
 use Response;
 
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-
 class ClienteController extends Controller
 {
 	// Configuramos en el constructor del controlador la autenticación usando el Middleware auth.basic,
@@ -34,7 +32,6 @@ class ClienteController extends Controller
 	 */
 	public function index()
 	{
-
 	    // Activamos la caché de los resultados.
         //  Cache::remember('tabla', $minutes, function()
         $clientes=Cache::remember('clientes',20/60, function()
@@ -60,14 +57,13 @@ class ClienteController extends Controller
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan datos necesarios para el proceso de alta.'])],422);
 		}
-
-		// Insertamos una fila en Cliente con create pasándole todos los datos recibidos.
+		// Insertamos una fila en Pantalla con create pasándole todos los datos recibidos.
 		// En $request->all() tendremos todos los campos del formulario recibidos.
 		$nuevoCliente=Cliente::create($request->all());
 
 		// Más información sobre respuestas en http://jsonapi.org/format/
 		// Devolvemos el código HTTP 201 Created – [Creada] Respuesta a un POST que resulta en una creación. Debería ser combinado con un encabezado Location, apuntando a la ubicación del nuevo recurso.
-		$response = Response::make(json_encode(['Cliente'=>$nuevoCliente]), 201)->header('Location', 'http://ads.deskode.local/api/clientes/'.$nuevoCliente->IdCliente)->header('Content-Type', 'application/json');
+		$response = Response::make(json_encode(['Cliente'=>$nuevoCliente]), 201)->header('Location', 'http://ads.deskode.local/api/v1/clientes/'.$nuevoCliente->IdCliente)->header('Content-Type', 'application/json');
 		return $response;
 	}
 
