@@ -53,7 +53,7 @@ class VideoController extends Controller
 	public function store(Request $request)
 	{
 		// Primero comprobaremos si estamos recibiendo todos los campos.
-		if (!$request->input('Pantalla_id') ||!$request->input('Cliente_id') || !$request->input('Categoria_id') || !$request->input('Venta_id') || !$request->input('FechaAlta') || !$request->input('FechaBaja') || !$request->input('URL'))
+		if (!$request->input('Pantalla_id') || !$request->input('Cliente_id') || !$request->input('Categoria_id') || !$request->input('Venta_id') || !$request->input('FechaAlta') || !$request->input('FechaBaja') || !$request->input('URL'))
 		{
 			// Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
 			// En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
